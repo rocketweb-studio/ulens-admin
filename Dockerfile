@@ -22,4 +22,4 @@ ENV NODE_ENV production
 COPY --from=builder /app/ ./
 EXPOSE 3000
 RUN npm install -g pnpm
-CMD ["npm", "start"]
+CMD ["pnpm", "start"]
