@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "build:production": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
+    "start": "vite preview",
     "update-ui-kit": "pnpm add @rocketweb-studio/ulens-ui-kit@latest"
   },
   "dependencies": {
