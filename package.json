@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "build:prodaction": "vite build",
+    "build:production": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "update-ui-kit": "pnpm add @rocketweb-studio/ulens-ui-kit@latest"
