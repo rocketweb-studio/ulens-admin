@@ -1,0 +1,83 @@
+@utility large {
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 138%;
+}
+
+@utility h1 {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 180%;
+}
+
+@utility h2 {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 133%;
+}
+
+@utility h3 {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 150%;
+}
+
+@utility regular_text_16 {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+}
+
+@utility bold_text_16 {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 150%;
+}
+
+@utility regular_text_14 {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 171%;
+}
+
+@utility medium_text_14 {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 171%;
+}
+
+@utility bold_text_14 {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 171%;
+}
+
+@utility small_text {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 133%;
+}
+
+@utility semi_bold_small_text {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 133%;
+}
+
+@utility regular_link {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 171%;
+    text-decoration: underline;
+    text-decoration-skip-ink: none;
+    color: var(--color-accent-500);
+}
+
+@utility small_link {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 133%;
+    text-decoration: underline;
+    text-decoration-skip-ink: none;
+    color: var(--color-accent-500);
+}
