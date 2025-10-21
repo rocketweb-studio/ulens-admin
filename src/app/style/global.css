@@ -2,49 +2,51 @@
 @import '../../shared/styles/colors.css';
 @import '../../shared/styles/typography.css';
 
-html {
-    box-sizing: border-box;
-    font-size: 100%;
-    height: 100%;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
+@layer base {
+    html {
+        box-sizing: border-box;
+        font-size: 100%;
+        height: 100%;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 
-*,
-*::before,
-*::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    list-style: none;
-    text-decoration: none;
-}
+    *,
+    *::before,
+    *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        list-style: none;
+        text-decoration: none;
+    }
 
-input,
-button,
-select,
-textarea,
-optgroup,
-option {
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    font-style: inherit;
-    color: inherit;
-}
+    input,
+    button,
+    select,
+    textarea,
+    optgroup,
+    option {
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        font-style: inherit;
+        color: inherit;
+    }
 
-a,
-button {
-    cursor: pointer;
-}
+    a,
+    button {
+        cursor: pointer;
+    }
 
-a, a:visited {
-    color: inherit;
-}
+    a, a:visited {
+        color: inherit;
+    }
 
-body {
-    font-family: Inter, sans-serif;
-    background-color: var(--color-dark-700);
-    color: var(--color-light-100);
-    height: 100%;
+    body {
+        font-family: Inter, sans-serif;
+        background-color: var(--color-dark-700);
+        color: var(--color-light-100);
+        height: 100%;
+    }
 }
