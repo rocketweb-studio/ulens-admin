@@ -4,7 +4,7 @@ import {Link} from "react-router";
 
 export const Header = () => {
   return (
-    <header className="h-[60px] border-b border-[var(--color-dark-300)] px-[60px] py-3">
+    <header className="sticky top-0 h-[60px] border-b border-[var(--color-dark-300)] px-[60px] py-3 bg-[var(--color-dark-700)]">
 
       <div className='flex justify-between items-center' >
         <div>

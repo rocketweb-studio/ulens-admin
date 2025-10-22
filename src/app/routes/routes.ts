@@ -1,5 +1,5 @@
 import {createBrowserRouter} from "react-router";
-import {SignIn} from "@/pages/sign-in";
+import {SignInPage} from "@/pages/sign-in";
 import {UserList} from "@/pages/user-list";
 import {ProjectLayout} from "@/pages/project-layout";
 import {Statistics} from "@/pages/statistics";
@@ -13,7 +13,7 @@ export const router = createBrowserRouter([
   {
     Component: RootLayout,
     children: [
-      {path: PATH.main, Component: SignIn},
+      {path: PATH.main, Component: SignInPage},
       {
         Component: ProjectLayout,
         children: [

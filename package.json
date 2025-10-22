@@ -9,12 +9,12 @@
     "build:production": "vite build",
     "lint": "eslint .",
     "start": "vite preview --host --port 3000",
-    "update-ui-kit": "pnpm add @rocketweb-studio/ulens-ui-kit@latest"
+    "update-ui-kit": "pnpm i @rocketweb-studio/ulens-ui-kit@latest"
   },
   "dependencies": {
     "@apollo/client": "^4.0.7",
     "@hookform/resolvers": "^5.2.2",
-    "@rocketweb-studio/ulens-ui-kit": "^0.2.1",
+    "@rocketweb-studio/ulens-ui-kit": "^0.4.0",
     "@tailwindcss/vite": "^4.1.14",
     "clsx": "^2.1.1",
     "graphql": "^16.11.0",
