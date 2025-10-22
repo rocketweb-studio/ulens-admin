@@ -3,7 +3,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {type SubmitHandler, useForm} from "react-hook-form";
 import {signInSchemas} from "@/features/sign-in/model/schemas/signInSchemas.ts";
 import {useMutation} from "@apollo/client/react";
-import {useNavigate} from "react-router";
+import {Navigate, useNavigate} from "react-router";
 import {PATH} from "@/shared";
 import {loginAdminQuery} from "@/shared/graphql/queries/loginAdmin.ts";
 
@@ -16,7 +16,13 @@ type Inputs = {
 
 export const SignIn = () => {
   const navigate = useNavigate();
-  const [add, {loading, error}] = useMutation(loginAdminQuery);
+  const [add, {error}] = useMutation(loginAdminQuery);
+
+  const accessToken = localStorage.getItem('adminAccessToken')
+  if (accessToken) {
+    return <Navigate to={PATH.userList} replace />
+  }
+
 
   const {
     register,
@@ -29,10 +35,6 @@ export const SignIn = () => {
   })
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-
-    // console.log('accessToken', loginData?.loginAdmin.adminAccessToken)
-    console.log('loading', loading)
-    console.log('error', error)
 
     try {
       const loginData = await add({variables: {input: {...data}}}).then((res) => (res.data))

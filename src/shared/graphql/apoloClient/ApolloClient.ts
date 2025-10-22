@@ -1,6 +1,8 @@
 import {ApolloClient, ApolloLink, CombinedGraphQLErrors, HttpLink, InMemoryCache, ServerError} from "@apollo/client";
 import {SetContextLink} from "@apollo/client/link/context";
 import {ErrorLink} from "@apollo/client/link/error";
+import {router} from "@/app/routes/routes.ts";
+import {PATH} from "@/shared";
 
 const authLink = new SetContextLink(async (prevContext) => {
   const token = localStorage.getItem('adminAccessToken')
@@ -15,7 +17,6 @@ const authLink = new SetContextLink(async (prevContext) => {
 
 const errorLink = new ErrorLink(({ error }) => {
   // GraphQL errors: extensions.code
-  debugger
   if (CombinedGraphQLErrors.is(error)) {
     for (const err of error.errors) {
       const code = err.message;
@@ -28,6 +29,7 @@ const errorLink = new ErrorLink(({ error }) => {
           break;
         case 'Unauthorized':
           console.log('Unauthorized error')
+          router.navigate(PATH.main, { replace: true })
           // отдать ошибки валидации в UI
           break;
         default:

@@ -5,11 +5,17 @@ import {
   IconTrendingUp,
   Sidebar
 } from "@rocketweb-studio/ulens-ui-kit";
-import {Link, useLocation} from "react-router";
+import {Link, Navigate, useLocation} from "react-router";
 import {PATH} from "@/shared";
 
 export const SidebarWidget = () => {
   const location = useLocation();
+
+  const accessToken = localStorage.getItem('adminAccessToken')
+  if (!accessToken) {
+    return <Navigate to={PATH.main} replace />;
+  }
+
 
   const sidebarLinks = [
     {
@@ -38,6 +44,8 @@ export const SidebarWidget = () => {
     },
 
   ]
+
+
 
   return (
     <div className='w-[220px]'>
