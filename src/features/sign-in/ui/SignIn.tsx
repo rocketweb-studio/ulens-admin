@@ -34,8 +34,6 @@ export const SignIn = () => {
     console.log('loading', loading)
     console.log('error', error)
 
-
-    console.log(data)
     try {
       const loginData = await add({variables: {input: {...data}}}).then((res) => (res.data))
       console.log('loginData', loginData?.loginAdmin.adminAccessToken)
