@@ -6,6 +6,7 @@ import {useMutation} from "@apollo/client/react";
 import {useNavigate} from "react-router";
 import {PATH} from "@/shared";
 import {loginAdminQuery} from "@/shared/graphql/queries/loginAdmin.ts";
+import {toast} from "react-toastify";
 
 
 type Inputs = {
@@ -38,7 +39,7 @@ export const SignIn = () => {
 
     try {
       const loginData = await add({variables: {input: {...data}}}).then((res) => (res.data))
-      console.log('loginData', loginData?.loginAdmin.adminAccessToken)
+      toast.success('Login successful')
       if (loginData?.loginAdmin.adminAccessToken)  localStorage.setItem('adminAccessToken', loginData.loginAdmin.adminAccessToken)
       if (!error && typeof loginData?.loginAdmin.adminAccessToken === 'string') {
         navigate(PATH.userList, { replace: true })

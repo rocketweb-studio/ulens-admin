@@ -3,6 +3,7 @@ import {SetContextLink} from "@apollo/client/link/context";
 import {ErrorLink} from "@apollo/client/link/error";
 import {router} from "@/app/routes/routes.ts";
 import {PATH} from "@/shared";
+import {toast} from "react-toastify";
 
 const authLink = new SetContextLink(async (prevContext) => {
   const token = localStorage.getItem('adminAccessToken')
@@ -15,7 +16,7 @@ const authLink = new SetContextLink(async (prevContext) => {
   };
 });
 
-const errorLink = new ErrorLink(({ error }) => {
+const errorLink = new ErrorLink(({ error, operation }) => {
   // GraphQL errors: extensions.code
   if (CombinedGraphQLErrors.is(error)) {
     for (const err of error.errors) {
@@ -30,6 +31,10 @@ const errorLink = new ErrorLink(({ error }) => {
         case 'Unauthorized':
           console.log('Unauthorized error')
           router.navigate(PATH.main, { replace: true })
+          console.log(operation.operationName)
+          if (operation.operationName === 'singIn') {
+            toast.error('Incorrect email or password')
+          }
           // отдать ошибки валидации в UI
           break;
         default:
