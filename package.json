@@ -9,10 +9,12 @@
     "build:production": "vite build",
     "lint": "eslint .",
     "start": "vite preview --host --port 3000",
-    "update-ui-kit": "pnpm i @rocketweb-studio/ulens-ui-kit@latest"
+    "update-ui-kit": "pnpm i @rocketweb-studio/ulens-ui-kit@latest",
+    "codegen": "graphql-codegen --config codegen.ts --watch"
   },
   "dependencies": {
     "@apollo/client": "^4.0.7",
+    "@graphql-typed-document-node/core": "^3.2.0",
     "@hookform/resolvers": "^5.2.2",
     "@rocketweb-studio/ulens-ui-kit": "^0.4.0",
     "@tailwindcss/vite": "^4.1.14",
@@ -28,6 +30,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
+    "@graphql-codegen/cli": "^6.0.1",
+    "@parcel/watcher": "^2.5.1",
     "@types/node": "^24.6.0",
     "@types/react": "^19.1.16",
     "@types/react-dom": "^19.1.9",

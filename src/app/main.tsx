@@ -5,7 +5,7 @@ import './style/global.css'
 import '@rocketweb-studio/ulens-ui-kit/dist/index.css'
 import {RouterProvider} from "react-router";
 import {router} from "./routes/routes.ts";
-import { client } from '@/shared/api/ApolloClient.ts';
+import { client } from '@/shared/graphql/apoloClient/ApolloClient.ts';
 
 
 createRoot(document.getElementById('root')!).render(
