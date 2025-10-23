@@ -16,12 +16,12 @@ const authLink = new SetContextLink(async (prevContext) => {
   };
 });
 
-const errorLink = new ErrorLink(({ error, operation }) => {
+const errorLink = new ErrorLink(({ error }) => {
   // GraphQL errors: extensions.code
   if (CombinedGraphQLErrors.is(error)) {
     for (const err of error.errors) {
-      const code = err.message;
-      switch (code) {
+      const message = err.message;
+      switch (message) {
         case 'FORBIDDEN':
           // показать экран "нет прав"/логирование
           break;
@@ -30,15 +30,13 @@ const errorLink = new ErrorLink(({ error, operation }) => {
           break;
         case 'Unauthorized':
           console.log('Unauthorized error')
+          localStorage.removeItem('adminAccessToken')
           router.navigate(PATH.main, { replace: true })
-          console.log(operation.operationName)
-          if (operation.operationName === 'singIn') {
-            toast.error('Incorrect email or password')
-          }
           // отдать ошибки валидации в UI
           break;
         default:
         // централизованное логирование / алертинг
+          toast.error(message)
       }
     }
   } else if (ServerError.is(error)) {
