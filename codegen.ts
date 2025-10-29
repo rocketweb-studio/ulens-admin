@@ -8,7 +8,9 @@ const config: CodegenConfig = {
     './src/shared/graphql/generated/':
       {
         preset: 'client',
-        config: {useTypeImports: true, enumsAsTypes: true}
+        config: {
+          useTypeImports: true, enumsAsTypes: true
+        }
       }
   }
 }
