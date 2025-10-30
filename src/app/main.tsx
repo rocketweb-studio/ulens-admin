@@ -9,9 +9,9 @@ import { client } from '@/shared/graphql/apoloClient/ApolloClient.ts';
 
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+  // <StrictMode>
     <ApolloProvider client={client}>
       <RouterProvider router={router} />
     </ApolloProvider>
-  </StrictMode>
+  // </StrictMode>
 )
