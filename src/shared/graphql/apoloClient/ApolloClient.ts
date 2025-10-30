@@ -1,19 +1,11 @@
-import {
-  ApolloClient,
-  ApolloLink,
-  CombinedGraphQLErrors,
-  HttpLink,
-  InMemoryCache,
-  ServerError,
-  split
-} from "@apollo/client";
+import {ApolloClient, ApolloLink, CombinedGraphQLErrors, HttpLink, InMemoryCache, ServerError} from "@apollo/client";
 import {SetContextLink} from "@apollo/client/link/context";
 import {ErrorLink} from "@apollo/client/link/error";
 import {router} from "@/app/routes/routes.ts";
 import {PATH} from "@/shared";
 import {toast} from "react-toastify";
-import {WebSocketLink} from "@apollo/client/link/ws";
-import {SubscriptionClient} from "subscriptions-transport-ws";
+import {GraphQLWsLink} from "@apollo/client/link/subscriptions";
+import {createClient} from "graphql-ws";
 import {getMainDefinition} from "@apollo/client/utilities";
 
 
@@ -71,38 +63,41 @@ const errorLink = new ErrorLink(({ error }) => {
 
 
 
-const wsClient = new SubscriptionClient(import.meta.env.VITE_BASE_WS_URL);
-const wsLink = new WebSocketLink(wsClient);
+// const wsClient = new SubscriptionClient(import.meta.env.VITE_BASE_WS_URL);
+// const wsLink = new WebSocketLink(wsClient);
 
-// const wsLink = new GraphQLWsLink(
-//   createClient({
-//     url: import.meta.env.VITE_BASE_WS_URL
-//   })
-// );
-//
-//
+const wsLink = new GraphQLWsLink(
+  createClient({
+    url: import.meta.env.VITE_BASE_WS_URL
+  })
+);
+
+
 const httpLink = new HttpLink({ uri: import.meta.env.VITE_BASE_URL });
-//
-// const splitLink = split(
-//   ({ operationType }) => {
-//     return operationType === OperationTypeNode.SUBSCRIPTION;
-//   },
-//   wsLink,
-//   httpLink
-// );
 
-
-
-
-
-const splitLink = split(
+const splitLink = ApolloLink.split(
   ({ query }) => {
-    const def = getMainDefinition(query);
-    return def.kind === 'OperationDefinition' && def.operation === 'subscription';
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === 'OperationDefinition' &&
+      definition.operation === 'subscription'
+    );
   },
   wsLink,
   httpLink
 );
+
+
+
+
+// const splitLink = split(
+//   ({ query }) => {
+//     const def = getMainDefinition(query);
+//     return def.kind === 'OperationDefinition' && def.operation === 'subscription';
+//   },
+//   wsLink,
+//   httpLink
+// );
 
 
 

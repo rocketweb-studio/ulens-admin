@@ -1,4 +1,3 @@
-import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
 import {ApolloProvider} from "@apollo/client/react";
 import './style/global.css'
@@ -9,9 +8,7 @@ import { client } from '@/shared/graphql/apoloClient/ApolloClient.ts';
 
 
 createRoot(document.getElementById('root')!).render(
-  // <StrictMode>
     <ApolloProvider client={client}>
       <RouterProvider router={router} />
     </ApolloProvider>
-  // </StrictMode>
 )
