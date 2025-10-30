@@ -13,7 +13,7 @@ export const PostsList = () => {
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
 
   const {data, loading, fetchMore} = useQuery(getAllPostsForAdminQuery, {
-    variables: {input: {endCursorPostId: '', pageSize: 5, search: 'stalcman' }}
+    variables: {input: {endCursorPostId: '', pageSize: 5, search: '' }}
   });
   const {data: dataSubs} = useSubscription(getPostsSubscription);
 
