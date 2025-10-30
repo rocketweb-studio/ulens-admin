@@ -5,8 +5,8 @@ import {signInSchemas} from "@/features/sign-in/model/schemas/signInSchemas.ts";
 import {useMutation} from "@apollo/client/react";
 import {useNavigate} from "react-router";
 import {PATH} from "@/shared";
-import {loginAdminQuery} from "@/shared/graphql/queries/loginAdmin.ts";
 import {toast} from "react-toastify";
+import {loginAdminQuery} from "@/shared/graphql/queries";
 
 
 type Inputs = {

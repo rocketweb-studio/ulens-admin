@@ -48,7 +48,7 @@ export const SidebarWidget = () => {
 
 
   return (
-    <div className='w-[220px]'>
+    <div className='min-w-[220px] '>
       <div className='fixed border-r border-[var(--color-dark-300)]  h-screen'>
         <Sidebar sidebarLinks={sidebarLinks} LinkComponent={Link}/>
       </div>

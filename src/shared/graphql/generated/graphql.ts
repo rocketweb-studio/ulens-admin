@@ -25,6 +25,12 @@ export type FilterByStatus =
   | 'BLOCKED'
   | 'NOT_BLOCKED';
 
+export type GetAdminPostsInput = {
+  endCursorPostId?: InputMaybe<Scalars['String']['input']>;
+  pageSize?: InputMaybe<Scalars['Float']['input']>;
+  search?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type GetPaymentsInput = {
   pageNumber?: InputMaybe<Scalars['Float']['input']>;
   pageSize?: InputMaybe<Scalars['Float']['input']>;
@@ -40,6 +46,15 @@ export type GetUsersInput = {
   search?: InputMaybe<Scalars['String']['input']>;
   sortBy?: InputMaybe<SortabeFieldsForUsers>;
   sortDirection?: InputMaybe<SortDirection>;
+};
+
+export type ImageModel = {
+  __typename?: 'ImageModel';
+  createdAt: Scalars['String']['output'];
+  fileSize: Scalars['Float']['output'];
+  height: Scalars['Float']['output'];
+  url: Scalars['String']['output'];
+  width: Scalars['Float']['output'];
 };
 
 export type LoginAdminInput = {
@@ -74,16 +89,58 @@ export type MutationSetBlockStatusForUserArgs = {
   input: SetBlockStatusForUserInput;
 };
 
+export type OwnerModel = {
+  __typename?: 'OwnerModel';
+  firstName?: Maybe<Scalars['String']['output']>;
+  lastName?: Maybe<Scalars['String']['output']>;
+};
+
+export type PageInfoModel = {
+  __typename?: 'PageInfoModel';
+  endCursorPostId?: Maybe<Scalars['String']['output']>;
+  hasNextPage: Scalars['Boolean']['output'];
+};
+
+export type PostImageModel = {
+  __typename?: 'PostImageModel';
+  medium: Array<ImageModel>;
+  small: Array<ImageModel>;
+};
+
 export type PostModel = {
   __typename?: 'PostModel';
-  id: Scalars['ID']['output'];
+  avatarOwner?: Maybe<Scalars['String']['output']>;
+  avatarWhoLikes: Scalars['Boolean']['output'];
+  createdAt: Scalars['String']['output'];
+  description: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  images: PostImageModel;
+  isLiked: Scalars['Boolean']['output'];
+  likeCount: Scalars['Float']['output'];
+  owner: OwnerModel;
+  ownerId: Scalars['String']['output'];
+  updatedAt: Scalars['String']['output'];
+  userName: Scalars['String']['output'];
+};
+
+export type PostsResponse = {
+  __typename?: 'PostsResponse';
+  items: Array<PostModel>;
+  pageInfo: PageInfoModel;
+  pageSize: Scalars['Float']['output'];
+  totalCount: Scalars['Float']['output'];
 };
 
 export type Query = {
   __typename?: 'Query';
+  getAllPostsForAdmin: PostsResponse;
   getPayments: TransactionsResponse;
-  getPost: PostModel;
   getUsers: UsersResponse;
+};
+
+
+export type QueryGetAllPostsForAdminArgs = {
+  input: GetAdminPostsInput;
 };
 
 
@@ -117,6 +174,11 @@ export type SortableTransactionFields =
   | 'CREATED_AT'
   | 'EXPIRES_AT'
   | 'PROVIDER';
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  newPostAdded: PostModel;
+};
 
 export type TransactionModel = {
   __typename?: 'TransactionModel';
@@ -153,6 +215,13 @@ export type UsersResponse = {
   totalCount: Scalars['Float']['output'];
 };
 
+export type GetAllPostsQueryVariables = Exact<{
+  input: GetAdminPostsInput;
+}>;
+
+
+export type GetAllPostsQuery = { __typename?: 'Query', getAllPostsForAdmin: { __typename?: 'PostsResponse', pageInfo: { __typename?: 'PageInfoModel', hasNextPage: boolean }, items: Array<{ __typename?: 'PostModel', id: string, avatarOwner?: string | null, createdAt: string, description: string, userName: string, images: { __typename?: 'PostImageModel', medium: Array<{ __typename?: 'ImageModel', url: string }> } }> } };
+
 export type SingInMutationVariables = Exact<{
   input: LoginAdminInput;
 }>;
@@ -160,5 +229,12 @@ export type SingInMutationVariables = Exact<{
 
 export type SingInMutation = { __typename?: 'Mutation', loginAdmin: { __typename?: 'LoginAdminModel', adminAccessToken: string } };
 
+export type GetPostsSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
+
+export type GetPostsSubscription = { __typename?: 'Subscription', newPostAdded: { __typename?: 'PostModel', id: string, userName: string, description: string, avatarOwner?: string | null, createdAt: string, images: { __typename?: 'PostImageModel', medium: Array<{ __typename?: 'ImageModel', url: string }> } } };
+
+
+export const GetAllPostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getAllPosts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GetAdminPostsInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllPostsForAdmin"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}}]}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"avatarOwner"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}},{"kind":"Field","name":{"kind":"Name","value":"images"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"medium"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetAllPostsQuery, GetAllPostsQueryVariables>;
 export const SingInDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"singIn"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginAdminInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"loginAdmin"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"adminAccessToken"}}]}}]}}]} as unknown as DocumentNode<SingInMutation, SingInMutationVariables>;
+export const GetPostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"getPosts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"newPostAdded"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"avatarOwner"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"images"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"medium"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetPostsSubscription, GetPostsSubscriptionVariables>;

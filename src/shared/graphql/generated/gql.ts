@@ -14,10 +14,14 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
+    "\n    query getAllPosts($input: GetAdminPostsInput!) {\n        getAllPostsForAdmin(input: $input) {\n            pageInfo {\n                hasNextPage\n            }\n            items {\n                id\n                avatarOwner\n                createdAt\n                description\n                userName\n                images {\n                    medium {\n                        url\n                    }\n                }\n            }\n        }\n    }\n": typeof types.GetAllPostsDocument,
     "\n    mutation singIn($input: LoginAdminInput!) {\n        loginAdmin(input: $input) {\n            adminAccessToken\n        }\n    }\n": typeof types.SingInDocument,
+    "\n    subscription getPosts {\n        newPostAdded {\n            id\n            userName\n            description\n            avatarOwner\n            createdAt\n            images {\n                medium {\n                    url\n                }\n            }\n        }\n    }\n": typeof types.GetPostsDocument,
 };
 const documents: Documents = {
+    "\n    query getAllPosts($input: GetAdminPostsInput!) {\n        getAllPostsForAdmin(input: $input) {\n            pageInfo {\n                hasNextPage\n            }\n            items {\n                id\n                avatarOwner\n                createdAt\n                description\n                userName\n                images {\n                    medium {\n                        url\n                    }\n                }\n            }\n        }\n    }\n": types.GetAllPostsDocument,
     "\n    mutation singIn($input: LoginAdminInput!) {\n        loginAdmin(input: $input) {\n            adminAccessToken\n        }\n    }\n": types.SingInDocument,
+    "\n    subscription getPosts {\n        newPostAdded {\n            id\n            userName\n            description\n            avatarOwner\n            createdAt\n            images {\n                medium {\n                    url\n                }\n            }\n        }\n    }\n": types.GetPostsDocument,
 };
 
 /**
@@ -37,7 +41,15 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "\n    query getAllPosts($input: GetAdminPostsInput!) {\n        getAllPostsForAdmin(input: $input) {\n            pageInfo {\n                hasNextPage\n            }\n            items {\n                id\n                avatarOwner\n                createdAt\n                description\n                userName\n                images {\n                    medium {\n                        url\n                    }\n                }\n            }\n        }\n    }\n"): (typeof documents)["\n    query getAllPosts($input: GetAdminPostsInput!) {\n        getAllPostsForAdmin(input: $input) {\n            pageInfo {\n                hasNextPage\n            }\n            items {\n                id\n                avatarOwner\n                createdAt\n                description\n                userName\n                images {\n                    medium {\n                        url\n                    }\n                }\n            }\n        }\n    }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "\n    mutation singIn($input: LoginAdminInput!) {\n        loginAdmin(input: $input) {\n            adminAccessToken\n        }\n    }\n"): (typeof documents)["\n    mutation singIn($input: LoginAdminInput!) {\n        loginAdmin(input: $input) {\n            adminAccessToken\n        }\n    }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n    subscription getPosts {\n        newPostAdded {\n            id\n            userName\n            description\n            avatarOwner\n            createdAt\n            images {\n                medium {\n                    url\n                }\n            }\n        }\n    }\n"): (typeof documents)["\n    subscription getPosts {\n        newPostAdded {\n            id\n            userName\n            description\n            avatarOwner\n            createdAt\n            images {\n                medium {\n                    url\n                }\n            }\n        }\n    }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
