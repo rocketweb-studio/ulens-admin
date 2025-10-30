@@ -62,10 +62,6 @@ const errorLink = new ErrorLink(({ error }) => {
 });
 
 
-
-// const wsClient = new SubscriptionClient(import.meta.env.VITE_BASE_WS_URL);
-// const wsLink = new WebSocketLink(wsClient);
-
 const wsLink = new GraphQLWsLink(
   createClient({
     url: import.meta.env.VITE_BASE_WS_URL
@@ -86,19 +82,6 @@ const splitLink = ApolloLink.split(
   wsLink,
   httpLink
 );
-
-
-
-
-// const splitLink = split(
-//   ({ query }) => {
-//     const def = getMainDefinition(query);
-//     return def.kind === 'OperationDefinition' && def.operation === 'subscription';
-//   },
-//   wsLink,
-//   httpLink
-// );
-
 
 
 export const client = new ApolloClient({

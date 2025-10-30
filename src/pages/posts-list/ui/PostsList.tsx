@@ -81,12 +81,12 @@ export const PostsList = () => {
   }, [data]);
 
   if (loading && !postsData.length) {
-    return <div>Loading...</div>;
+    return <div className={'flex justify-center mt-30'}>Loading data...</div>;
   }
 
   return (
-    <section className='pt-[60px] px-[25px]'>
-      <Input placeholder={'Search'}/>
+    <section>
+      <Input placeholder={'Search by user name'}/>
       <div className='flex flex-wrap gap-[12px]'>
         {postsData.map(el => (
           <Post key={el.id} postItem={el}/>
