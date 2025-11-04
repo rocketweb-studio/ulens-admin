@@ -6,10 +6,10 @@ export const sortUsers = (users: UserModel[], sort: UserSortValue): UserModel[] 
 
     switch (sort) {
         case "AZ":
-            return [...users].sort((a, b) => a.userName.localeCompare(b.userName));
+            return [...users].sort((a, b) => (a.userName ?? '').localeCompare(b.userName ?? ''));
 
         case "ZA":
-            return [...users].sort((a, b) => b.userName.localeCompare(a.userName));
+            return [...users].sort((a, b) => (b.userName ?? '').localeCompare(a.userName ?? ''));
 
         case "NEW":
             return [...users].sort((a, b) =>
