@@ -202,8 +202,10 @@ export type TransactionsResponse = {
 export type UserModel = {
   __typename?: 'UserModel';
   createdAt: Scalars['String']['output'];
+  firstName?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
   isBlocked: Scalars['Boolean']['output'];
+  lastName?: Maybe<Scalars['String']['output']>;
   userName?: Maybe<Scalars['String']['output']>;
 };
 
