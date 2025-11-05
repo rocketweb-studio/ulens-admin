@@ -2,7 +2,6 @@ import {Input} from "@rocketweb-studio/ulens-ui-kit";
 import s from "./UserList.module.css"
 import {type ReactNode} from "react";
 
-
 type User= {
     userId: number;
     profileLink: string;
@@ -165,12 +164,14 @@ export const UserList = () => {
         }
     ];
 
+
     return (
         <div>
             <h1>UserList</h1>
             <Input/>
 
             {/*<Select/>*/}
+
             <Table data={users} columns={columns}/>
             {/*<Pagination onPageChange={handlePageChange} elementCount={8}/>*/}
 
