@@ -9,6 +9,8 @@ query GetUsers($input:GetUsersInput!) {
         userName
         createdAt
         isBlocked
+        firstName
+        lastName
       }
       page
       pageSize
