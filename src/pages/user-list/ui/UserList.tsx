@@ -8,6 +8,8 @@ type User = {
     id: number;
     profileLink: string;
     userName: string;
+    firstName: string;
+    lastName: string;
     createdAt: string;
     isBlocked: boolean;
 }
@@ -80,6 +82,8 @@ export const UserList = () => {
         id: user.id ,
         profileLink: `https://ulens.org/profile/${user.id}`,
         userName: user.userName,
+        firstName: user.firstName,
+        lastName: user.lastName,
         createdAt: user.createdAt,
         isBlocked:user.isBlocked,
     })) || [];
@@ -121,8 +125,8 @@ export const UserList = () => {
             title: 'Username',
             dataIndex: 'userName',
             key: 'userName-column',
-            render: (name) => (
-                <span style={{color: 'white'}}>{name}</span>
+            render: (_,  {firstName,lastName}) => (
+                <span style={{color: 'white'}}>  {`${firstName} ${lastName}`}</span>
             )
         },
         {
