@@ -1,8 +1,8 @@
 import type { SortDirection, SortabeFieldsForUsers } from "@/shared/graphql/generated/graphql";
+import type {SortValue} from "@/features/user-sort/model/types.ts";
 
-export type LocalSort = "AZ" | "ZA" | "NEW" | "OLD";
 
-export const mapSortToQuery = (sort: LocalSort): {
+export const mapSortToQuery = (sort: SortValue): {
     sortBy: SortabeFieldsForUsers;
     sortDirection: SortDirection;
 } => {

@@ -4,7 +4,8 @@ import {type ReactNode, useState} from "react";
 import {useQuery} from "@apollo/client/react";
 import {getUsersList} from "@/shared/graphql/queries/getUsersList.ts";
 import {UsersSortSelect} from "@/features/user-sort";
-import {type LocalSort, mapSortToQuery} from "@/features/user-sort/model/mapper.ts";
+import {mapSortToQuery} from "@/features/user-sort/model/mapper.ts";
+import type {SortValue} from "@/features/user-sort/model/types.ts";
 
 type User = {
     id: number;
@@ -64,7 +65,7 @@ const Table = ({ data, columns }: TableProps) => {
 
 export const UserList = () => {
 
-   const [sort, setSort] = useState<LocalSort>("NEW")
+   const [sort, setSort] = useState<SortValue>("NEW")
 
     const sortQuery = mapSortToQuery(sort)
 
@@ -80,22 +81,6 @@ export const UserList = () => {
             }
         }
     });
-
-    // const handleSortChange = (value: string) => {
-    //     setSortValue(value);
-    //     const [sortBy, sortDirection] = value.split("-");
-    //
-    //     refetch({
-    //         input: {
-    //             pageNumber: 1,
-    //             pageSize: 8,
-    //             sortBy,
-    //             sortDirection,
-    //             filterByStatus: 'ALL',
-    //             search: ""
-    //         }
-    //     });
-    // }
 
     const users: User[] = data?.getUsers?.items?.map((user: any) => ({
         id: user.id ,

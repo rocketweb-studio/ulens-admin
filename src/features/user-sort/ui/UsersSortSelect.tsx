@@ -1,15 +1,15 @@
-import type {LocalSort} from "@/features/user-sort/model/mapper.ts";
+import type {SortValue} from "@/features/user-sort/model/types.ts";
 
 type Props = {
-    value: LocalSort;
-    onChange: (value: LocalSort) => void;
+    value: SortValue;
+    onChange: (value: SortValue) => void;
 };
 
 export const UsersSortSelect = ({ value, onChange }: Props) => {
     return (
         <select
             value={value}
-            onChange={(e) => onChange(e.target.value as LocalSort)}
+            onChange={(e) => onChange(e.target.value as SortValue)}
             style={{ marginBottom: "16px" }}
         >
             <option value="AZ">Name: A → Z</option>
