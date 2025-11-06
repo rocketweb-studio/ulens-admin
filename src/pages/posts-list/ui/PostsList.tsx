@@ -4,20 +4,24 @@ import {useQuery, useSubscription} from "@apollo/client/react";
 import {useEffect, useRef, useState} from "react";
 import {getPostsSubscription} from "@/shared/graphql/subscription";
 import {getAllPostsForAdminQuery} from "@/shared/graphql/queries";
+import {useDebounce} from "@/shared/hooks";
 
 type PostsData = PostData[]
 
 export const PostsList = () => {
   const [search, setSearch] = useState('')
+  const debouncedSearchTerm = useDebounce(search, 1000)
   const [postsData, setPostsData] = useState<PostsData>([]);
   const observerTarget = useRef<HTMLDivElement>(null);
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
 
   const {data, loading, fetchMore} = useQuery(getAllPostsForAdminQuery, {
-    variables: {input: {endCursorPostId: '', pageSize: 5, search}}
+    variables: {input: {endCursorPostId: '', pageSize: 5, search: debouncedSearchTerm}},
   });
   const {data: dataSubs} = useSubscription(getPostsSubscription);
 
+
+  console.log(debouncedSearchTerm)
   // Подписка - новые посты добавляются В НАЧАЛО автоматически
   useEffect(() => {
     if (dataSubs?.newPostAdded) {
@@ -35,7 +39,7 @@ export const PostsList = () => {
             input: {
               endCursorPostId: endPostId,
               pageSize: 5,
-              search
+              search: debouncedSearchTerm
             }
           }
         });
@@ -79,9 +83,10 @@ export const PostsList = () => {
 
   useEffect(() => {
     if (data?.getAllPostsForAdmin?.items) {
+      setHasNextPage(data?.getAllPostsForAdmin.pageInfo.hasNextPage);
       setPostsData(data.getAllPostsForAdmin.items);
     }
-  }, [data]);
+  }, [data, debouncedSearchTerm]);
 
 
 
