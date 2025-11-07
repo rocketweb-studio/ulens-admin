@@ -21,9 +21,9 @@ type Column = {
     render?: (value: any, record: User,isOpenModal?:boolean,setIsOpenModal?:(value:boolean)=>void) => ReactNode;
 }
 
-type TableProps = {
-    data: User[];
-    columns: Column[];
+type TableProps<T,K> = {
+    data: T[];
+    columns: K[];
 }
 
 const TableRow = ({ row, columns }: { row: User; columns: Column[] }) => {
@@ -43,7 +43,7 @@ const TableRow = ({ row, columns }: { row: User; columns: Column[] }) => {
     );
 };
 
-const Table = ({ data, columns }: TableProps) => {
+const Table = ({ data, columns }: TableProps<User,Column>) => {
     return (
         <table className={s.table}>
             <thead className={s.thead}>
@@ -115,9 +115,9 @@ export const UserList = () => {
             title: 'Profile link',
             dataIndex: 'profileLink',
             key: 'profileLink-column',
-            render: (_, { userName, profileLink }) => (
+            render: (_, { firstName, lastName, profileLink }) => (
                 <a href={profileLink} target="_blank" rel="noopener noreferrer">
-                    {userName}
+                    {`${firstName} ${lastName}`}
                 </a>
             )
         },
@@ -125,26 +125,36 @@ export const UserList = () => {
             title: 'Username',
             dataIndex: 'userName',
             key: 'userName-column',
-            render: (_,  {firstName,lastName}) => (
-                <span style={{color: 'white'}}>  {`${firstName} ${lastName}`}</span>
+            render: (_,  {userName}) => (
+                <span style={{color: 'white'}}>  {userName}</span>
             )
         },
         {
             title: 'Date added',
             dataIndex: 'createdAt',
             key: 'dateAdded-column',
-            render: (date, _, isOpenModal, setIsOpenModal) => {
+            render: (date, {isBlocked}, isOpenModal=false, setIsOpenModal) => {
                 const formattedDate = new Date(date).toLocaleDateString('ru-RU', {
                     day: '2-digit',
                     month: '2-digit',
                     year: 'numeric'
                 });
+                const deleteUserHandler=()=>{
+
+                }
+                const bunUnBunHandler=()=>{
+
+                }
+
+                const moreInfoHandler=()=>{
+
+                }
                 return (
-                    <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+                    <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between",position:"relative"}}>
                         <span style={{color: 'white'}}>
                             {formattedDate}
                         </span>
-                        <button onClick={()=>setIsOpenModal!(!isOpenModal)}>
+                      <button onClick={()=>setIsOpenModal!(!isOpenModal)} >
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <g clipPath="url(#clip0_45764_12530)">
@@ -165,8 +175,11 @@ export const UserList = () => {
                                 </defs>
                             </svg>
                         </button>
-                        {isOpenModal&&<div style={{cursor:"pointer"}}><ul>
-                            <li><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                        {isOpenModal&&<ul  className={s.dropDownBtnContainer} onClick={()=>setIsOpenModal!(false)} onMouseLeave={()=>setIsOpenModal!(false)} tabIndex={0}>
+                            <li className={s.dropDownBtn} onClick={deleteUserHandler}>
+
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g clipPath="url(#clip0_45764_12538)">
                                     <path d="M21 6H17C16.7348 6 16.4804 6.10536 16.2929 6.29289C16.1054 6.48043 16 6.73478 16 7C16 7.26522 16.1054 7.51957 16.2929 7.70711C16.4804 7.89464 16.7348 8 17 8H21C21.2652 8 21.5196 7.89464 21.7071 7.70711C21.8946 7.51957 22 7.26522 22 7C22 6.73478 21.8946 6.48043 21.7071 6.29289C21.5196 6.10536 21.2652 6 21 6Z" fill="white"/>
                                     <path d="M10 11C10.7911 11 11.5645 10.7654 12.2223 10.3259C12.8801 9.88635 13.3928 9.26164 13.6955 8.53074C13.9983 7.79983 14.0775 6.99556 13.9231 6.21964C13.7688 5.44372 13.3878 4.73098 12.8284 4.17157C12.269 3.61216 11.5563 3.2312 10.7804 3.07686C10.0044 2.92252 9.20017 3.00173 8.46927 3.30448C7.73836 3.60723 7.11365 4.11992 6.67412 4.77772C6.2346 5.43552 6 6.20888 6 7C6 8.06087 6.42143 9.07828 7.17157 9.82843C7.92172 10.5786 8.93913 11 10 11ZM10 5C10.3956 5 10.7822 5.1173 11.1111 5.33706C11.44 5.55683 11.6964 5.86918 11.8478 6.23463C11.9991 6.60009 12.0387 7.00222 11.9616 7.39018C11.8844 7.77814 11.6939 8.13451 11.4142 8.41422C11.1345 8.69392 10.7781 8.8844 10.3902 8.96157C10.0022 9.03874 9.60009 8.99914 9.23463 8.84776C8.86918 8.69639 8.55682 8.44004 8.33706 8.11114C8.1173 7.78224 8 7.39556 8 7C8 6.46957 8.21071 5.96086 8.58579 5.58579C8.96086 5.21072 9.46957 5 10 5Z" fill="white"/>
@@ -178,8 +191,10 @@ export const UserList = () => {
                                     </clipPath>
                                 </defs>
                             </svg>
-                                <span>Delete User</span></li>
-                            <li>
+                                <span>Delete User</span>
+
+                                </li>
+                            <li className={s.dropDownBtn} onClick={bunUnBunHandler}>
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <g clipPath="url(#clip0_45764_13900)">
@@ -195,9 +210,8 @@ export const UserList = () => {
                                         </clipPath>
                                     </defs>
                                 </svg>
-
-                                <span>Un-ban User</span></li>
-                            <li>
+                                {isBlocked?<span>Un-ban User</span>:<span>Ban in the system</span>}</li>
+                            <li className={s.dropDownBtn} onClick={moreInfoHandler}>
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <g clipPath="url(#clip0_45764_12544)">
@@ -218,8 +232,8 @@ export const UserList = () => {
                                     </defs>
                                 </svg>
                                 <span>More Information</span></li>
-                        </ul>
-                        </div>}
+
+                        </ul>}
                     </div>
                 );
             }
