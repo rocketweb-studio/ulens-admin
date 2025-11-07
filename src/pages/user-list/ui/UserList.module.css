@@ -29,4 +29,22 @@ th,td{
 .tbody_td{
     border-bottom: 1px solid var(--color-dark-500);
 }
+.dropDownBtnContainer{
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    background-color: var(--color-dark-500);
+    padding: 12px;
+    cursor:pointer;
+    border: 1px solid var(--color-dark-100);
+}
+
+.dropDownBtn {
+    display: flex;
+    gap: 12px;
+    padding: 6px 0;
+    white-space: nowrap;
+    background-color: var(--color-dark-500);
+}
+
 
