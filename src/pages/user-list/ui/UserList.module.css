@@ -3,6 +3,7 @@ tr{
     height:48px;
 }
 th,td{
+    padding: 12px;
 
 }
 .table{
@@ -29,12 +30,17 @@ th,td{
 .tbody_td{
     border-bottom: 1px solid var(--color-dark-500);
 }
+.link{
+    color: var(--color-accent-100);
+}.link:hover{
+    color: var(--color-accent-700);
+}
 .dropDownBtnContainer{
     position: absolute;
     z-index: 2;
     right: 0;
     background-color: var(--color-dark-500);
-    padding: 12px;
+    /*padding: 12px;*/
     cursor:pointer;
     border: 1px solid var(--color-dark-100);
 }
@@ -42,9 +48,15 @@ th,td{
 .dropDownBtn {
     display: flex;
     gap: 12px;
-    padding: 6px 0;
+    padding: 12px;
     white-space: nowrap;
     background-color: var(--color-dark-500);
+}
+.dropDownBtn:hover {
+    background-color: var(--color-dark-300);
+}
+.dropDownBtn:active {
+    background-color: var(--color-dark-100);
 }
 
 
