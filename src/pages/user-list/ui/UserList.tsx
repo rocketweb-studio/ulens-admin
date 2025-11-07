@@ -118,7 +118,7 @@ export const UserList = () => {
             dataIndex: 'profileLink',
             key: 'profileLink-column',
             render: (_, { firstName, lastName, profileLink }) => (
-                <a href={profileLink} target="_blank" rel="noopener noreferrer">
+                <a href={profileLink} target="_blank" rel="noopener noreferrer" className={s.link}>
                     {`${firstName} ${lastName}`}
                 </a>
             )
