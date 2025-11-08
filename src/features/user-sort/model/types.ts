@@ -1,1 +1,1 @@
-export type SortValue = 'AZ' | 'ZA' | 'NEW' | 'OLD';
+export type SortValue = 'AZ' | 'ZA' | 'NEW' | 'OLD'

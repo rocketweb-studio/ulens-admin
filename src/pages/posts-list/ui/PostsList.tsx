@@ -1,35 +1,34 @@
-import {Input} from "@rocketweb-studio/ulens-ui-kit";
-import {Post, type PostData} from "@/entities/post/ui/Post.tsx";
-import {useQuery, useSubscription} from "@apollo/client/react";
-import {useEffect, useRef, useState} from "react";
-import {getPostsSubscription} from "@/shared/graphql/subscription";
-import {getAllPostsForAdminQuery} from "@/shared/graphql/queries";
-import {useDebounce} from "@/shared/hooks";
+import { Input } from '@rocketweb-studio/ulens-ui-kit'
+import { Post, type PostData } from '@/entities/post/ui/Post.tsx'
+import { useQuery, useSubscription } from '@apollo/client/react'
+import { useEffect, useRef, useState } from 'react'
+import { getPostsSubscription } from '@/shared/graphql/subscription'
+import { getAllPostsForAdminQuery } from '@/shared/graphql/queries'
+import { useDebounce } from '@/shared/hooks'
 
 type PostsData = PostData[]
 
 export const PostsList = () => {
   const [search, setSearch] = useState('')
   const debouncedSearchTerm = useDebounce(search, 1000)
-  const [postsData, setPostsData] = useState<PostsData>([]);
-  const observerTarget = useRef<HTMLDivElement>(null);
-  const [hasNextPage, setHasNextPage] = useState<boolean>(true);
+  const [postsData, setPostsData] = useState<PostsData>([])
+  const observerTarget = useRef<HTMLDivElement>(null)
+  const [hasNextPage, setHasNextPage] = useState<boolean>(true)
 
-  const {data, loading, fetchMore} = useQuery(getAllPostsForAdminQuery, {
-    variables: {input: {endCursorPostId: '', pageSize: 5, search: debouncedSearchTerm}},
-  });
-  const {data: dataSubs} = useSubscription(getPostsSubscription);
-
+  const { data, loading, fetchMore } = useQuery(getAllPostsForAdminQuery, {
+    variables: { input: { endCursorPostId: '', pageSize: 5, search: debouncedSearchTerm } },
+  })
+  const { data: dataSubs } = useSubscription(getPostsSubscription)
 
   console.log(debouncedSearchTerm)
   // Подписка - новые посты добавляются В НАЧАЛО автоматически
   useEffect(() => {
     if (dataSubs?.newPostAdded) {
-      const newPost = dataSubs?.newPostAdded.userName.toLowerCase().includes(search.toLowerCase())? dataSubs.newPostAdded : null
-      if(newPost) setPostsData((prevState) => [newPost, ...prevState]);
+      const newPost =
+        dataSubs?.newPostAdded.userName.toLowerCase().includes(search.toLowerCase()) ? dataSubs.newPostAdded : null
+      if (newPost) setPostsData((prevState) => [newPost, ...prevState])
     }
-  }, [dataSubs]);
-
+  }, [dataSubs])
 
   const loadMore = async (endPostId: string) => {
     if (hasNextPage) {
@@ -39,18 +38,18 @@ export const PostsList = () => {
             input: {
               endCursorPostId: endPostId,
               pageSize: 5,
-              search: debouncedSearchTerm
-            }
-          }
-        });
+              search: debouncedSearchTerm,
+            },
+          },
+        })
 
         if (result.data?.getAllPostsForAdmin?.items) {
-          const newPosts = result.data.getAllPostsForAdmin.items;
-          setPostsData((prevState) => [...prevState, ...newPosts]);
+          const newPosts = result.data.getAllPostsForAdmin.items
+          setPostsData((prevState) => [...prevState, ...newPosts])
           setHasNextPage(result.data?.getAllPostsForAdmin?.pageInfo.hasNextPage)
         }
       } catch (error) {
-        console.error('Error loading more posts:', error);
+        console.error('Error loading more posts:', error)
       }
     }
   }
@@ -60,56 +59,51 @@ export const PostsList = () => {
       (entries) => {
         if (entries[0]?.isIntersecting && !loading && postsData[postsData.length - 1].id) {
           let endPostId = postsData[postsData.length - 1].id
-          loadMore(endPostId);
+          loadMore(endPostId)
         }
       },
       {
         threshold: 0.1,
-        rootMargin: '30px' // Начинаем загрузку за 100px до конца
-      }
-    );
+        rootMargin: '30px', // Начинаем загрузку за 100px до конца
+      },
+    )
 
     if (observerTarget.current) {
-      observer.observe(observerTarget.current);
+      observer.observe(observerTarget.current)
     }
 
     return () => {
       if (observerTarget.current) {
-        observer.unobserve(observerTarget.current);
+        observer.unobserve(observerTarget.current)
       }
-      observer.disconnect();
-    };
-  }, [postsData]);
+      observer.disconnect()
+    }
+  }, [postsData])
 
   useEffect(() => {
     if (data?.getAllPostsForAdmin?.items) {
-      setHasNextPage(data?.getAllPostsForAdmin.pageInfo.hasNextPage);
-      setPostsData(data.getAllPostsForAdmin.items);
+      setHasNextPage(data?.getAllPostsForAdmin.pageInfo.hasNextPage)
+      setPostsData(data.getAllPostsForAdmin.items)
     }
-  }, [data, debouncedSearchTerm]);
-
-
+  }, [data, debouncedSearchTerm])
 
   return (
     <section>
       <Input value={search} placeholder={'Search by user name'} onChange={(event) => setSearch(event.target.value)} />
 
-      {(loading && !postsData.length) ? <div className={'flex justify-center mt-30'}>Loading data...</div>
-        : (
-          <>
-            <div className='flex flex-wrap gap-[12px]'>
-              {postsData.map(el => (
-                <Post key={el.id} postItem={el}/>
-              ))}
-            </div>
+      {loading && !postsData.length ?
+        <div className={'flex justify-center mt-30'}>Loading data...</div>
+      : <>
+          <div className='flex flex-wrap gap-[12px]'>
+            {postsData.map((el) => (
+              <Post key={el.id} postItem={el} />
+            ))}
+          </div>
 
-            {/* Элемент-триггер для Intersection Observer */}
-            <div ref={observerTarget} className='py-4 text-center'>
-            </div>
-          </>
-        )}
-
-
+          {/* Элемент-триггер для Intersection Observer */}
+          <div ref={observerTarget} className='py-4 text-center'></div>
+        </>
+      }
     </section>
-  );
-};
+  )
+}

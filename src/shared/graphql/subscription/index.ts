@@ -1,1 +1,1 @@
-export {getPostsSubscription} from './getPostsSubscription.ts'
+export { getPostsSubscription } from './getPostsSubscription.ts'

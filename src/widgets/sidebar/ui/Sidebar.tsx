@@ -3,19 +3,18 @@ import {
   IconImageOutline,
   IconPerson,
   IconTrendingUp,
-  Sidebar
-} from "@rocketweb-studio/ulens-ui-kit";
-import {Link, Navigate, useLocation} from "react-router";
-import {PATH} from "@/shared";
+  Sidebar,
+} from '@rocketweb-studio/ulens-ui-kit'
+import { Link, Navigate, useLocation } from 'react-router'
+import { PATH } from '@/shared'
 
 export const SidebarWidget = () => {
-  const location = useLocation();
+  const location = useLocation()
 
   const accessToken = localStorage.getItem('adminAccessToken')
   if (!accessToken) {
-    return <Navigate to={PATH.main} replace />;
+    return <Navigate to={PATH.main} replace />
   }
-
 
   const sidebarLinks = [
     {
@@ -42,16 +41,13 @@ export const SidebarWidget = () => {
       href: PATH.postsList,
       isActive: PATH.postsList === location.pathname,
     },
-
   ]
-
-
 
   return (
     <div className='min-w-[220px] '>
       <div className='fixed border-r border-[var(--color-dark-300)]  h-screen'>
-        <Sidebar sidebarLinks={sidebarLinks} LinkComponent={Link}/>
+        <Sidebar sidebarLinks={sidebarLinks} LinkComponent={Link} />
       </div>
     </div>
-  );
-};
+  )
+}
