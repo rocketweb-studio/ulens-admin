@@ -9,13 +9,13 @@ export const mapSortToQuery = (sort: SortValue): {
     switch (sort) {
         case "AZ":
             return {
-                sortBy: "USER_NAME",
+                sortBy: "EMAIL",
                 sortDirection: "ASC"
             };
 
         case "ZA":
             return {
-                sortBy: "USER_NAME",
+                sortBy: "EMAIL",
                 sortDirection: "DESC"
             };
 

@@ -6,6 +6,7 @@ import {getUsersList} from "@/shared/graphql/queries/getUsersList.ts";
 import {UsersSortSelect} from "@/features/user-sort";
 import {mapSortToQuery} from "@/features/user-sort/model/mapper.ts";
 import type {SortValue} from "@/features/user-sort/model/types.ts";
+import {SortArrows} from "@/pages/user-list/ui/SortArrows.tsx";
 
 type User = {
     id: number;
@@ -19,7 +20,7 @@ type User = {
 
 type Column = {
     key: string;
-    title: string;
+    title: React.ReactNode;
     dataIndex: keyof User;
     render?: (value: any, record: User,isOpenModal?:boolean,setIsOpenModal?:(value:boolean)=>void) => ReactNode;
 }
@@ -69,6 +70,15 @@ export const UserList = () => {
 
    const [sort, setSort] = useState<SortValue>("NEW")
 
+    const toggleDateSort = () => {
+        setSort(prev => (prev === "NEW" ? "OLD" : "NEW"));
+    };
+
+    const toggleProfileSort = () => {
+        setSort(prev => (prev === "AZ" ? "ZA" : "AZ"));
+    };
+
+
     const sortQuery = mapSortToQuery(sort)
 
     const { data, loading, error} = useQuery(getUsersList, {
@@ -83,6 +93,21 @@ export const UserList = () => {
             }
         }
     });
+
+    // const SortArrow = ({ active, direction }: { active: boolean; direction: 'ASC' | 'DESC' }) => {
+    //     const style = { marginLeft: 6, width: 12, height: 12 };
+    //
+    //     if (!active) {
+    //         return <svg style={style} viewBox="0 0 24 24"><path fill="#666" d="M7 10l5 5 5-5"/></svg>;
+    //     }
+    //
+    //     return direction === 'ASC' ? (
+    //         <svg style={style} viewBox="0 0 24 24"><path fill="white" d="M7 14l5-5 5 5"/></svg>
+    //     ) : (
+    //         <svg style={style} viewBox="0 0 24 24"><path fill="white" d="M7 10l5 5 5-5"/></svg>
+    //     );
+    // };
+
 
     const users: User[] = data?.getUsers?.items?.map((user: any) => ({
         id: user.id ,
@@ -120,7 +145,15 @@ export const UserList = () => {
                 </div>)
         },
         {
-            title: 'Profile link',
+            title: (
+                <div className={s.sortHeader} onClick={() => toggleProfileSort()}>
+                    Profile link
+                    <SortArrows
+                        active={sort === "AZ" || sort === "ZA"}
+                        direction={sort === "AZ" ? "ASC" : "DESC"}
+                    />
+                </div>
+            ),
             dataIndex: 'profileLink',
             key: 'profileLink-column',
             render: (_, { firstName, lastName, profileLink }) => (
@@ -138,7 +171,15 @@ export const UserList = () => {
             )
         },
         {
-            title: 'Date added',
+            title: (
+                <div className={s.sortHeader} onClick={() => toggleDateSort()}>
+                    Date added
+                    <SortArrows
+                        active={sort === "NEW" || sort === "OLD"}
+                        direction={sort === "NEW" ? "DESC" : "ASC"}
+                    />
+                </div>
+            ),
             dataIndex: 'createdAt',
             key: 'dateAdded-column',
             render: (date, {isBlocked}, isOpenModal=false, setIsOpenModal) => {
