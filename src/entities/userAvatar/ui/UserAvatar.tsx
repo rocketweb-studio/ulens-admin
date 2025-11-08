@@ -12,7 +12,7 @@ export const UserAvatar = ({ userName = '', mode, avatarOwner, height = 0, width
     <>
       {avatarOwner ?
         <img
-          className='w-[36px] h-[36px] rounded-[50%] object-cover]'
+          className='w-[36px] h-[36px] rounded-[50%] object-cover'
           src={`${import.meta.env.VITE_MEDIA_URL}${avatarOwner}`}
           alt={'avatar'}
           {...viewMode}
