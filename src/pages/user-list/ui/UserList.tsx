@@ -6,7 +6,7 @@ import {getUsersList} from "@/shared/graphql/queries/getUsersList.ts";
 import {UsersSortSelect} from "@/features/user-sort";
 import {mapSortToQuery} from "@/features/user-sort/model/mapper.ts";
 import type {SortValue} from "@/features/user-sort/model/types.ts";
-import {SortArrows} from "@/entities/user/ui/SortArrows.tsx";
+import {SortArrows} from "@/entities/user/userSort/ui/SortArrows.tsx";
 
 type User = {
     id: number;
