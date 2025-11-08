@@ -1,30 +1,48 @@
 import {Input} from "@rocketweb-studio/ulens-ui-kit";
 import s from "./UserList.module.css"
+import { useState} from "react";
 import {useQuery} from "@apollo/client/react";
 import {getUsersList} from "@/shared/graphql/queries/getUsersList.ts";
+import {UsersSortSelect} from "@/features/user-sort";
+import {mapSortToQuery} from "@/features/user-sort/model/mapper.ts";
+import type {SortValue} from "@/features/user-sort/model/types.ts";
+import {SortArrows} from "@/entities/user/ui/SortArrows.tsx";
 import { Table} from "@/widgets/table/Table.tsx";
 import type {Column} from "@/widgets/table/TableRow.tsx";
 
 type User = {
     id: string;
     profileLink: string;
-    userName: string |"No userName";
-    firstName: string |"No firstName";
-    lastName: string |"No lastName";
+    userName: string;
+    firstName: string;
+    lastName: string;
     createdAt: string;
     isBlocked: boolean;
 }
 
 export const UserList = () => {
-    const { data, loading, error } = useQuery(getUsersList, {
+    const [sort, setSort] = useState<SortValue>("NEW")
+
+    const toggleDateSort = () => {
+        setSort(prev => (prev === "NEW" ? "OLD" : "NEW"));
+    };
+
+    const toggleProfileSort = () => {
+        setSort(prev => (prev === "AZ" ? "ZA" : "AZ"));
+    };
+
+    const sortQuery = mapSortToQuery(sort)
+
+
+    const { data, loading, error} = useQuery(getUsersList, {
         variables: {
             input: {
                 pageNumber: 1,
                 pageSize: 8,
-                sortBy: 'CREATED_AT',
-                sortDirection: 'DESC',
                 filterByStatus: 'ALL',
-                search: ""
+                search: "",
+                sortBy: sortQuery.sortBy,
+                sortDirection: sortQuery.sortDirection,
             }
         }
     });
@@ -65,7 +83,15 @@ export const UserList = () => {
                 </div>)
         },
         {
-            title: 'Profile link',
+            title: (
+                <div className={s.sortHeader} onClick={() => toggleProfileSort()}>
+                    Profile link
+                    <SortArrows
+                        active={sort === "AZ" || sort === "ZA"}
+                        direction={sort === "AZ" ? "ASC" : "DESC"}
+                    />
+                </div>
+            ),
             dataIndex: 'profileLink',
             key: 'profileLink-column',
             render: (_, { firstName, lastName, profileLink }) => (
@@ -83,7 +109,15 @@ export const UserList = () => {
             )
         },
         {
-            title: 'Date added',
+            title: (
+                <div className={s.sortHeader} onClick={() => toggleDateSort()}>
+                    Date added
+                    <SortArrows
+                        active={sort === "NEW" || sort === "OLD"}
+                        direction={sort === "NEW" ? "DESC" : "ASC"}
+                    />
+                </div>
+            ),
             dataIndex: 'createdAt',
             key: 'dateAdded-column',
             render: (date, {isBlocked}, isOpenModal=false, setIsOpenModal) => {
@@ -208,6 +242,7 @@ export const UserList = () => {
     return (
         <div>
             <Input placeholder={'Search'}/>
+            <UsersSortSelect value={sort} onChange={setSort}/>
             <Table<User> rows={rowsTableUsers} columns={columnsTable} />
         </div>
     );

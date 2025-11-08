@@ -3,7 +3,7 @@ import s from "@/pages/user-list/ui/UserList.module.css";
 
 export type Column<T extends Record<string, any>> = {
     key: string;
-    title: string ;
+    title: string |ReactNode ;
     dataIndex: string;
     render: (
         value: string,
