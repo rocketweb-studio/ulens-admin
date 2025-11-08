@@ -1,70 +1,21 @@
 import {Input} from "@rocketweb-studio/ulens-ui-kit";
 import s from "./UserList.module.css"
-import {type ReactNode, useState} from "react";
 import {useQuery} from "@apollo/client/react";
 import {getUsersList} from "@/shared/graphql/queries/getUsersList.ts";
+import { Table} from "@/widgets/table/Table.tsx";
+import type {Column} from "@/widgets/table/TableRow.tsx";
 
 type User = {
-    id: number;
+    id: string;
     profileLink: string;
-    userName: string;
-    firstName: string;
-    lastName: string;
+    userName: string |"No userName";
+    firstName: string |"No firstName";
+    lastName: string |"No lastName";
     createdAt: string;
     isBlocked: boolean;
 }
 
-type Column = {
-    key: string;
-    title: string;
-    dataIndex: keyof User;
-    render?: (value: any, record: User,isOpenModal?:boolean,setIsOpenModal?:(value:boolean)=>void) => ReactNode;
-}
-
-type TableProps<T,K> = {
-    data: T[];
-    columns: K[];
-}
-
-const TableRow = ({ row, columns }: { row: User; columns: Column[] }) => {
-    const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
-
-    return (
-        <tr key={`user-${row.id}`} className={s.tbody_tr}>
-            {columns.map(column => (
-                <td key={`${row.id}-${column.key}`} className={s.tbody_td}>
-                    {column.render
-                        ? column.render(row[column.dataIndex], row, isOpenModal, setIsOpenModal)
-                        : row[column.dataIndex]
-                    }
-                </td>
-            ))}
-        </tr>
-    );
-};
-
-const Table = ({ data, columns }: TableProps<User,Column>) => {
-    return (
-        <table className={s.table}>
-            <thead className={s.thead}>
-            <tr className={s.thead_tr}>
-                {columns.map(column => (
-                    <td key={column.key} className={s.thead_td}>{column.title}</td>
-                ))}
-            </tr>
-            </thead>
-            <tbody className={s.tbody}>
-            {data.map((row) => (
-                <TableRow key={row.id} row={row} columns={columns} />
-            ))}
-            </tbody>
-        </table>
-    );
-};
-
 export const UserList = () => {
-
-
     const { data, loading, error } = useQuery(getUsersList, {
         variables: {
             input: {
@@ -78,24 +29,24 @@ export const UserList = () => {
         }
     });
 
-    const users: User[] = data?.getUsers?.items?.map((user: any) => ({
+    const rowsTableUsers: User[] = data?.getUsers.items.map((user) => ({
         id: user.id ,
         profileLink: `https://ulens.org/profile/${user.id}`,
-        userName: user.userName,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        userName: user.userName  ?? "——",
+        firstName: user.firstName ?? "——",
+        lastName: user.lastName ??  "——",
         createdAt: user.createdAt,
         isBlocked:user.isBlocked,
     })) || [];
 
-    const columns: Column[] = [
+    const columnsTable: Column<User>[] = [
         {
             title: 'User ID',
             dataIndex: 'id',
             key: 'userId-column',
             render: (userId,{isBlocked}) => (
                 <div style={{display: "flex", gap: "12px", flexDirection: "row",}}>
-                    {!isBlocked ?
+                    {isBlocked ?
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g clipPath="url(#clip0_45764_12513)">
                                 <path
@@ -256,8 +207,8 @@ export const UserList = () => {
 
     return (
         <div>
-            <Input/>
-            <Table data={users} columns={columns}/>
+            <Input placeholder={'Search'}/>
+            <Table<User> rows={rowsTableUsers} columns={columnsTable} />
         </div>
     );
 };
