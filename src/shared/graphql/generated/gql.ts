@@ -15,13 +15,13 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  */
 type Documents = {
     "\n    query getAllPosts($input: GetAdminPostsInput!) {\n        getAllPostsForAdmin(input: $input) {\n            pageInfo {\n                hasNextPage\n            }\n            items {\n                id\n                avatarOwner\n                createdAt\n                description\n                userName\n                images {\n                    medium {\n                        url\n                    }\n                }\n            }\n        }\n    }\n": typeof types.GetAllPostsDocument,
-    "\nquery GetUsers($input:GetUsersInput!) {\n    getUsers(input:$input) {\n      items {\n        id\n        userName\n        createdAt\n        isBlocked\n      }\n      page\n      pageSize\n      totalCount\n    }\n  }\n": typeof types.GetUsersDocument,
+    "\nquery GetUsers($input:GetUsersInput!) {\n    getUsers(input:$input) {\n      items {\n        id\n        userName\n        createdAt\n        isBlocked\n        firstName\n        lastName\n      }\n      page\n      pageSize\n      totalCount\n    }\n  }\n": typeof types.GetUsersDocument,
     "\n    mutation singIn($input: LoginAdminInput!) {\n        loginAdmin(input: $input) {\n            adminAccessToken\n        }\n    }\n": typeof types.SingInDocument,
     "\n    subscription getPosts {\n        newPostAdded {\n            id\n            userName\n            description\n            avatarOwner\n            createdAt\n            images {\n                medium {\n                    url\n                }\n            }\n        }\n    }\n": typeof types.GetPostsDocument,
 };
 const documents: Documents = {
     "\n    query getAllPosts($input: GetAdminPostsInput!) {\n        getAllPostsForAdmin(input: $input) {\n            pageInfo {\n                hasNextPage\n            }\n            items {\n                id\n                avatarOwner\n                createdAt\n                description\n                userName\n                images {\n                    medium {\n                        url\n                    }\n                }\n            }\n        }\n    }\n": types.GetAllPostsDocument,
-    "\nquery GetUsers($input:GetUsersInput!) {\n    getUsers(input:$input) {\n      items {\n        id\n        userName\n        createdAt\n        isBlocked\n      }\n      page\n      pageSize\n      totalCount\n    }\n  }\n": types.GetUsersDocument,
+    "\nquery GetUsers($input:GetUsersInput!) {\n    getUsers(input:$input) {\n      items {\n        id\n        userName\n        createdAt\n        isBlocked\n        firstName\n        lastName\n      }\n      page\n      pageSize\n      totalCount\n    }\n  }\n": types.GetUsersDocument,
     "\n    mutation singIn($input: LoginAdminInput!) {\n        loginAdmin(input: $input) {\n            adminAccessToken\n        }\n    }\n": types.SingInDocument,
     "\n    subscription getPosts {\n        newPostAdded {\n            id\n            userName\n            description\n            avatarOwner\n            createdAt\n            images {\n                medium {\n                    url\n                }\n            }\n        }\n    }\n": types.GetPostsDocument,
 };
@@ -47,7 +47,7 @@ export function graphql(source: "\n    query getAllPosts($input: GetAdminPostsIn
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\nquery GetUsers($input:GetUsersInput!) {\n    getUsers(input:$input) {\n      items {\n        id\n        userName\n        createdAt\n        isBlocked\n      }\n      page\n      pageSize\n      totalCount\n    }\n  }\n"): (typeof documents)["\nquery GetUsers($input:GetUsersInput!) {\n    getUsers(input:$input) {\n      items {\n        id\n        userName\n        createdAt\n        isBlocked\n      }\n      page\n      pageSize\n      totalCount\n    }\n  }\n"];
+export function graphql(source: "\nquery GetUsers($input:GetUsersInput!) {\n    getUsers(input:$input) {\n      items {\n        id\n        userName\n        createdAt\n        isBlocked\n        firstName\n        lastName\n      }\n      page\n      pageSize\n      totalCount\n    }\n  }\n"): (typeof documents)["\nquery GetUsers($input:GetUsersInput!) {\n    getUsers(input:$input) {\n      items {\n        id\n        userName\n        createdAt\n        isBlocked\n        firstName\n        lastName\n      }\n      page\n      pageSize\n      totalCount\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
