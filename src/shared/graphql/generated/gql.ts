@@ -16,6 +16,7 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
 type Documents = {
     "\n  mutation setBlockStatusForUser($input: SetBlockStatusForUserInput!) {\n    setBlockStatusForUser(input: $input)\n  }\n": typeof types.SetBlockStatusForUserDocument,
     "\n  query getAllPosts($input: GetAdminPostsInput!) {\n    getAllPostsForAdmin(input: $input) {\n      pageInfo {\n        hasNextPage\n      }\n      items {\n        id\n        avatarOwner\n        createdAt\n        description\n        userName\n        ownerId\n        images {\n          medium {\n            url\n          }\n        }\n      }\n    }\n  }\n": typeof types.GetAllPostsDocument,
+    "\n  query getPayments($input: GetPaymentsInput!) {\n    getPayments(input: $input) {\n      page\n      pageSize\n      totalCount\n      items {\n        amount\n        currency\n        expiresAt\n        id\n        interval\n        provider\n        status\n      }\n    }\n  }\n": typeof types.GetPaymentsDocument,
     "\n  query GetUsers($input: GetUsersInput!) {\n    getUsers(input: $input) {\n      items {\n        id\n        userName\n        createdAt\n        isBlocked\n        firstName\n        lastName\n      }\n      page\n      pageSize\n      totalCount\n    }\n  }\n": typeof types.GetUsersDocument,
     "\n  mutation singIn($input: LoginAdminInput!) {\n    loginAdmin(input: $input) {\n      adminAccessToken\n    }\n  }\n": typeof types.SingInDocument,
     "\n  subscription getPosts {\n    newPostAdded {\n      id\n      userName\n      description\n      avatarOwner\n      createdAt\n      images {\n        medium {\n          url\n        }\n      }\n    }\n  }\n": typeof types.GetPostsDocument,
@@ -23,6 +24,7 @@ type Documents = {
 const documents: Documents = {
     "\n  mutation setBlockStatusForUser($input: SetBlockStatusForUserInput!) {\n    setBlockStatusForUser(input: $input)\n  }\n": types.SetBlockStatusForUserDocument,
     "\n  query getAllPosts($input: GetAdminPostsInput!) {\n    getAllPostsForAdmin(input: $input) {\n      pageInfo {\n        hasNextPage\n      }\n      items {\n        id\n        avatarOwner\n        createdAt\n        description\n        userName\n        ownerId\n        images {\n          medium {\n            url\n          }\n        }\n      }\n    }\n  }\n": types.GetAllPostsDocument,
+    "\n  query getPayments($input: GetPaymentsInput!) {\n    getPayments(input: $input) {\n      page\n      pageSize\n      totalCount\n      items {\n        amount\n        currency\n        expiresAt\n        id\n        interval\n        provider\n        status\n      }\n    }\n  }\n": types.GetPaymentsDocument,
     "\n  query GetUsers($input: GetUsersInput!) {\n    getUsers(input: $input) {\n      items {\n        id\n        userName\n        createdAt\n        isBlocked\n        firstName\n        lastName\n      }\n      page\n      pageSize\n      totalCount\n    }\n  }\n": types.GetUsersDocument,
     "\n  mutation singIn($input: LoginAdminInput!) {\n    loginAdmin(input: $input) {\n      adminAccessToken\n    }\n  }\n": types.SingInDocument,
     "\n  subscription getPosts {\n    newPostAdded {\n      id\n      userName\n      description\n      avatarOwner\n      createdAt\n      images {\n        medium {\n          url\n        }\n      }\n    }\n  }\n": types.GetPostsDocument,
@@ -50,6 +52,10 @@ export function graphql(source: "\n  mutation setBlockStatusForUser($input: SetB
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query getAllPosts($input: GetAdminPostsInput!) {\n    getAllPostsForAdmin(input: $input) {\n      pageInfo {\n        hasNextPage\n      }\n      items {\n        id\n        avatarOwner\n        createdAt\n        description\n        userName\n        ownerId\n        images {\n          medium {\n            url\n          }\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query getAllPosts($input: GetAdminPostsInput!) {\n    getAllPostsForAdmin(input: $input) {\n      pageInfo {\n        hasNextPage\n      }\n      items {\n        id\n        avatarOwner\n        createdAt\n        description\n        userName\n        ownerId\n        images {\n          medium {\n            url\n          }\n        }\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query getPayments($input: GetPaymentsInput!) {\n    getPayments(input: $input) {\n      page\n      pageSize\n      totalCount\n      items {\n        amount\n        currency\n        expiresAt\n        id\n        interval\n        provider\n        status\n      }\n    }\n  }\n"): (typeof documents)["\n  query getPayments($input: GetPaymentsInput!) {\n    getPayments(input: $input) {\n      page\n      pageSize\n      totalCount\n      items {\n        amount\n        currency\n        expiresAt\n        id\n        interval\n        provider\n        status\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
