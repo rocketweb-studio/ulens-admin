@@ -6,7 +6,7 @@ import {getUsersList} from "@/shared/graphql/queries/getUsersList.ts";
 import {UsersSortSelect} from "@/features/user-sort";
 import {mapSortToQuery} from "@/features/user-sort/model/mapper.ts";
 import type {SortValue} from "@/features/user-sort/model/types.ts";
-import {SortArrows} from "@/pages/user-list/ui/SortArrows.tsx";
+import {SortArrows} from "@/entities/user/ui/SortArrows.tsx";
 
 type User = {
     id: number;
@@ -78,7 +78,6 @@ export const UserList = () => {
         setSort(prev => (prev === "AZ" ? "ZA" : "AZ"));
     };
 
-
     const sortQuery = mapSortToQuery(sort)
 
     const { data, loading, error} = useQuery(getUsersList, {
@@ -93,21 +92,6 @@ export const UserList = () => {
             }
         }
     });
-
-    // const SortArrow = ({ active, direction }: { active: boolean; direction: 'ASC' | 'DESC' }) => {
-    //     const style = { marginLeft: 6, width: 12, height: 12 };
-    //
-    //     if (!active) {
-    //         return <svg style={style} viewBox="0 0 24 24"><path fill="#666" d="M7 10l5 5 5-5"/></svg>;
-    //     }
-    //
-    //     return direction === 'ASC' ? (
-    //         <svg style={style} viewBox="0 0 24 24"><path fill="white" d="M7 14l5-5 5 5"/></svg>
-    //     ) : (
-    //         <svg style={style} viewBox="0 0 24 24"><path fill="white" d="M7 10l5 5 5-5"/></svg>
-    //     );
-    // };
-
 
     const users: User[] = data?.getUsers?.items?.map((user: any) => ({
         id: user.id ,

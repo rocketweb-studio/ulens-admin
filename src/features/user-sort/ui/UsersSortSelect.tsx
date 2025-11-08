@@ -10,10 +10,10 @@ export const UsersSortSelect = ({ value, onChange }: Props) => {
         <select
             value={value}
             onChange={(e) => onChange(e.target.value as SortValue)}
-            style={{ marginBottom: "16px" }}
+            style={{ marginBottom: "16px", background: "black"}}
         >
-            <option value="AZ">Name: A → Z</option>
-            <option value="ZA">Name: Z → A</option>
+            <option value="AZ">Profile: A → Z</option>
+            <option value="ZA">Profile: Z → A</option>
             <option value="NEW">Date: New → Old</option>
             <option value="OLD">Date: Old → New</option>
         </select>
