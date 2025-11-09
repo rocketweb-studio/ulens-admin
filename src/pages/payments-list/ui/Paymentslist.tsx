@@ -13,7 +13,7 @@ export type Payment = {
   currency: string
 }
 
-export const mockPayments: Payment[] = [
+const mockPayments: Payment[] = [
   {
     id: '1',
     fullName: 'Ivan Yakymenko',
@@ -146,7 +146,7 @@ export const mockPayments: Payment[] = [
   },
 ]
 
-export const paymentColumns: Column<Payment>[] = [
+const paymentColumns: Column<Payment>[] = [
   {
     key: 'fullName',
     title: 'Full Name',
