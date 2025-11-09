@@ -1,5 +1,6 @@
 import s from "./UserList.module.css"
 import type {User} from "@/pages/user-list";
+import {UserDelete} from "@/entities/user/userDelete/ui/UserDelete.tsx";
 
 type Props = {
     user:User
@@ -8,9 +9,9 @@ type Props = {
 
 
 export const UserActionsMenu = ({user,setIsOpenModal}:Props) => {
-    const deleteUserHandler=()=>{
-
-    }
+    // const deleteUserHandler=()=>{
+    //
+    // }
     const bunUnBunHandler=()=>{
 
     }
@@ -21,8 +22,8 @@ export const UserActionsMenu = ({user,setIsOpenModal}:Props) => {
     return (
 
          <ul  className={s.dropDownBtnContainer} onClick={()=>setIsOpenModal(false)} onMouseLeave={()=>setIsOpenModal(false)} tabIndex={0}>
-                <li className={s.dropDownBtn} onClick={deleteUserHandler}>
-
+                <li className={s.dropDownBtn}>
+                    <UserDelete userId={user.id} username={user.userName}/>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clipPath="url(#clip0_45764_12538)">
                             <path d="M21 6H17C16.7348 6 16.4804 6.10536 16.2929 6.29289C16.1054 6.48043 16 6.73478 16 7C16 7.26522 16.1054 7.51957 16.2929 7.70711C16.4804 7.89464 16.7348 8 17 8H21C21.2652 8 21.5196 7.89464 21.7071 7.70711C21.8946 7.51957 22 7.26522 22 7C22 6.73478 21.8946 6.48043 21.7071 6.29289C21.5196 6.10536 21.2652 6 21 6Z" fill="white"/>

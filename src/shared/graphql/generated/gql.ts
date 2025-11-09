@@ -14,6 +14,7 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
+    "\nmutation DeleteUser($input: DeleteUserInput!) {\n    deleteUser(input: $input) \n}\n": typeof types.DeleteUserDocument,
     "\n  mutation setBlockStatusForUser($input: SetBlockStatusForUserInput!) {\n    setBlockStatusForUser(input: $input)\n  }\n": typeof types.SetBlockStatusForUserDocument,
     "\n  query getAllPosts($input: GetAdminPostsInput!) {\n    getAllPostsForAdmin(input: $input) {\n      pageInfo {\n        hasNextPage\n      }\n      items {\n        id\n        avatarOwner\n        createdAt\n        description\n        userName\n        ownerId\n        images {\n          medium {\n            url\n          }\n        }\n      }\n    }\n  }\n": typeof types.GetAllPostsDocument,
     "\n  query getPayments($input: GetPaymentsInput!) {\n    getPayments(input: $input) {\n      page\n      pageSize\n      totalCount\n      items {\n        amount\n        currency\n        expiresAt\n        id\n        interval\n        provider\n        status\n      }\n    }\n  }\n": typeof types.GetPaymentsDocument,
@@ -22,6 +23,7 @@ type Documents = {
     "\n  subscription getPosts {\n    newPostAdded {\n      id\n      userName\n      description\n      avatarOwner\n      createdAt\n      images {\n        medium {\n          url\n        }\n      }\n    }\n  }\n": typeof types.GetPostsDocument,
 };
 const documents: Documents = {
+    "\nmutation DeleteUser($input: DeleteUserInput!) {\n    deleteUser(input: $input) \n}\n": types.DeleteUserDocument,
     "\n  mutation setBlockStatusForUser($input: SetBlockStatusForUserInput!) {\n    setBlockStatusForUser(input: $input)\n  }\n": types.SetBlockStatusForUserDocument,
     "\n  query getAllPosts($input: GetAdminPostsInput!) {\n    getAllPostsForAdmin(input: $input) {\n      pageInfo {\n        hasNextPage\n      }\n      items {\n        id\n        avatarOwner\n        createdAt\n        description\n        userName\n        ownerId\n        images {\n          medium {\n            url\n          }\n        }\n      }\n    }\n  }\n": types.GetAllPostsDocument,
     "\n  query getPayments($input: GetPaymentsInput!) {\n    getPayments(input: $input) {\n      page\n      pageSize\n      totalCount\n      items {\n        amount\n        currency\n        expiresAt\n        id\n        interval\n        provider\n        status\n      }\n    }\n  }\n": types.GetPaymentsDocument,
@@ -44,6 +46,10 @@ const documents: Documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\nmutation DeleteUser($input: DeleteUserInput!) {\n    deleteUser(input: $input) \n}\n"): (typeof documents)["\nmutation DeleteUser($input: DeleteUserInput!) {\n    deleteUser(input: $input) \n}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -1,6 +1,7 @@
-import {gql} from "@apollo/client";
+import {graphql} from "@/shared/graphql/generated";
 
-export const deleteUser = gql(`
+
+export const deleteUser = graphql(`
 mutation DeleteUser($input: DeleteUserInput!) {
     deleteUser(input: $input) 
 }

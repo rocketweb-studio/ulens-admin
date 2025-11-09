@@ -6,11 +6,12 @@ import {getUsersList} from "@/shared/graphql/queries/getUsersList.ts";
 import {UsersSortSelect} from "@/features/user-sort";
 import {mapSortToQuery} from "@/features/user-sort/model/mapper.ts";
 import type {SortValue} from "@/features/user-sort/model/types.ts";
-import {SortArrows} from "@/entities/user/ui/SortArrows.tsx";
+
 import {Table} from "@/widgets/table/Table.tsx";
 import type {Column} from "@/widgets/table/TableRow.tsx";
 import {UserActionsMenu} from "@/pages/user-list/ui/UserActionsMenu.tsx";
 import {MoreInformation} from "@/pages/more-information";
+import {SortArrows} from "@/entities/user/userSort/ui/SortArrows.tsx";
 
 export type User = {
     id: string;
