@@ -1,39 +1,13 @@
 
-tr{
-    height:48px;
+.SearchPanel{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap:100px;
 }
-th,td{
-    padding: 12px;
-
-}
-.table{
+.selectContainer{
+    max-width: 240px;
     width: 100%;
-    padding: 12px 24px;
-    border: 1px solid var(--color-dark-500);
-    overflow: hidden;
-}
-.thead{
-    background-color:var(--color-dark-500);
-}
-.thead_tr{
-
-}
-.thead_td{
-
-}
-.tbody{
-
-}
-.tbody_tr{
-
-}
-.tbody_td{
-    border-bottom: 1px solid var(--color-dark-500);
-}
-.link{
-    color: var(--color-accent-500);
-}.link:hover{
-     color: var(--color-accent-700);
 }
 .dropDownBtnContainer{
     position: absolute;
@@ -57,6 +31,12 @@ th,td{
 .dropDownBtn:active {
     background-color: var(--color-dark-100);
 }
+
+.link{
+    color: var(--color-accent-500);
+}.link:hover{
+     color: var(--color-accent-700);
+ }
 
 .sortHeader {
     display: flex;

@@ -1,4 +1,4 @@
-import s from "@/pages/user-list/ui/UserList.module.css";
+import s from './Table.module.css'
 import {type Column, TableRow} from "./TableRow.tsx";
 
 

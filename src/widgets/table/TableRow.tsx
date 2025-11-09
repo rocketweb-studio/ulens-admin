@@ -1,5 +1,5 @@
 import {type ReactNode, useState} from "react";
-import s from "@/pages/user-list/ui/UserList.module.css";
+import s from "./Table.module.css";
 
 export type Column<T extends Record<string, any>> = {
     key: string;
