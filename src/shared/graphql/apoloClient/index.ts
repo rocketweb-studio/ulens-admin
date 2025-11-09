@@ -1,1 +1,1 @@
-export {client} from './ApolloClient.ts'
+export { client } from './ApolloClient.ts'

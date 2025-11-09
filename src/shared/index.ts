@@ -1,1 +1,1 @@
-export {PATH} from './router/path.ts'
+export { PATH } from './router/path.ts'

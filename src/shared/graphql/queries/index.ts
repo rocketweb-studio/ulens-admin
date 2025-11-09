@@ -1,2 +1,2 @@
-export {getAllPostsForAdminQuery} from './getAllPostsForAdmin.ts'
-export {loginAdminQuery} from './loginAdmin.ts'
+export { getAllPostsForAdminQuery } from './getAllPostsForAdmin.ts'
+export { loginAdminQuery } from './loginAdmin.ts'

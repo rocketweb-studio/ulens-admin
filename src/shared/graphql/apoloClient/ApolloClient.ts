@@ -1,13 +1,12 @@
-import {ApolloClient, ApolloLink, CombinedGraphQLErrors, HttpLink, InMemoryCache, ServerError} from "@apollo/client";
-import {SetContextLink} from "@apollo/client/link/context";
-import {ErrorLink} from "@apollo/client/link/error";
-import {router} from "@/app/routes/routes.ts";
-import {PATH} from "@/shared";
-import {toast} from "react-toastify";
-import {GraphQLWsLink} from "@apollo/client/link/subscriptions";
-import {createClient} from "graphql-ws";
-import {getMainDefinition} from "@apollo/client/utilities";
-
+import { ApolloClient, ApolloLink, CombinedGraphQLErrors, HttpLink, InMemoryCache, ServerError } from '@apollo/client'
+import { SetContextLink } from '@apollo/client/link/context'
+import { ErrorLink } from '@apollo/client/link/error'
+import { router } from '@/app/routes/routes.ts'
+import { PATH } from '@/shared'
+import { toast } from 'react-toastify'
+import { GraphQLWsLink } from '@apollo/client/link/subscriptions'
+import { createClient } from 'graphql-ws'
+import { getMainDefinition } from '@apollo/client/utilities'
 
 const authLink = new SetContextLink(async (prevContext) => {
   const token = localStorage.getItem('adminAccessToken')
@@ -17,35 +16,35 @@ const authLink = new SetContextLink(async (prevContext) => {
       authorization: token ? `Bearer ${token}` : '',
     },
     credentials: 'include',
-  };
-});
+  }
+})
 
 const errorLink = new ErrorLink(({ error }) => {
   // GraphQL errors: extensions.code
   if (CombinedGraphQLErrors.is(error)) {
     for (const err of error.errors) {
-      const message = err.message;
+      const message = err.message
       switch (message) {
         case 'FORBIDDEN':
           // показать экран "нет прав"/логирование
-          break;
+          break
         case 'BAD_USER_INPUT':
           // отдать ошибки валидации в UI
-          break;
+          break
         case 'Unauthorized':
           console.log('Unauthorized error')
           localStorage.removeItem('adminAccessToken')
           router.navigate(PATH.main, { replace: true })
           // отдать ошибки валидации в UI
-          break;
+          break
         default:
-        // централизованное логирование / алертинг
+          // централизованное логирование / алертинг
           toast.error(message)
       }
     }
   } else if (ServerError.is(error)) {
     // Network/server HTTP
-    const status = error.statusCode;
+    const status = error.statusCode
     if (status === 401) {
       console.log('401')
       // сессия истекла → разлогин или запуск refresh-потока
@@ -59,32 +58,26 @@ const errorLink = new ErrorLink(({ error }) => {
     // например: показать тост "Проблема соединения"
   }
   // вернуть ничего → ошибка пойдёт дальше вверх по цепочке
-});
-
+})
 
 const wsLink = new GraphQLWsLink(
   createClient({
-    url: import.meta.env.VITE_BASE_WS_URL
-  })
-);
+    url: import.meta.env.VITE_BASE_WS_URL,
+  }),
+)
 
-
-const httpLink = new HttpLink({ uri: import.meta.env.VITE_BASE_URL });
+const httpLink = new HttpLink({ uri: import.meta.env.VITE_BASE_URL })
 
 const splitLink = ApolloLink.split(
   ({ query }) => {
-    const definition = getMainDefinition(query);
-    return (
-      definition.kind === 'OperationDefinition' &&
-      definition.operation === 'subscription'
-    );
+    const definition = getMainDefinition(query)
+    return definition.kind === 'OperationDefinition' && definition.operation === 'subscription'
   },
   wsLink,
-  httpLink
-);
-
+  httpLink,
+)
 
 export const client = new ApolloClient({
-  link:  ApolloLink.from([authLink,errorLink,splitLink]),
+  link: ApolloLink.from([authLink, errorLink, splitLink]),
   cache: new InMemoryCache(),
-});
+})

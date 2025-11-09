@@ -1,10 +1,9 @@
-import { graphql } from "../generated/gql";
-
+import { graphql } from '../generated/gql'
 
 export const loginAdminQuery = graphql(`
-    mutation singIn($input: LoginAdminInput!) {
-        loginAdmin(input: $input) {
-            adminAccessToken
-        }
+  mutation singIn($input: LoginAdminInput!) {
+    loginAdmin(input: $input) {
+      adminAccessToken
     }
+  }
 `)

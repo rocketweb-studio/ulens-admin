@@ -1,4 +1,3 @@
-
 type Props = {
   width?: number
   height?: number
@@ -17,7 +16,10 @@ export const UserAvatar = ({ userName = '', mode, avatarOwner, height = 0, width
           alt={'avatar'}
           {...viewMode}
         />
-        : <div className='rounded-full object-cover bg-[var(--color-light-900)] flex items-center justify-center' style={{ height, width}}>
+      : <div
+          className='rounded-full object-cover bg-[var(--color-light-900)] flex items-center justify-center'
+          style={{ height, width }}
+        >
           {String(userName).slice(0, 2).toUpperCase()}
         </div>
       }
