@@ -1,58 +1,59 @@
-import { useState } from "react";
 import {useMutation} from "@apollo/client/react";
 import {getUsersList} from "@/shared/graphql/queries/getUsersList.ts";
 import {deleteUser} from "@/shared/graphql/mutation";
+import {Button, Modal} from "@rocketweb-studio/ulens-ui-kit";
 
 
-interface UserDeleteProps {
+type UserDeleteProps = {
+    isOpen: boolean;
+    onClose: () => void;
     userId: string;
-    username: string;
+    username: string
 }
 
-export function UserDelete({ userId, username }: UserDeleteProps) {
-    const [isDialogOpen, setDialogOpen] = useState(false);
+export const UserDelete = ({ isOpen, onClose, userId, username }: UserDeleteProps) => {
 
     const [removeUser, { loading }] = useMutation(deleteUser, {
         refetchQueries: [getUsersList],
     });
-
-    const openDialog = () => setDialogOpen(true);
-    const closeDialog = () => setDialogOpen(false);
 
     const handleConfirm = async () => {
         try {
             await removeUser({
                 variables: { input: { userId } }
             });
-            closeDialog();
+            onClose();
         } catch (err) {
             console.error("Delete error:", err);
         }
     };
 
     return (
-        <>
-            <button onClick={openDialog} disabled={loading}>
-                Delete
-            </button>
+        <Modal
+            className="flex flex-col"
+            isOpen={isOpen}
+            onClose={onClose}
+            modalTitle="Delete user"
+            hideDefaultButton
+        >
+            <p>
+                Are you sure you want to delete <strong>{username}</strong>?
+            </p>
 
-            {isDialogOpen && (
-                <div className="modal">
-                    <div className="modal-header">
-                        <h3>Are you sure?</h3>
-                        <button onClick={closeDialog}>×</button>
-                    </div>
+            <div className="flex justify-between mt-12">
+                <Button className="w-[130px]" onClick={onClose}>
+                    No
+                </Button>
 
-                    <div className="modal-body">
-                        <p>Are you sure you want to delete <strong>{username}</strong>?</p>
-                    </div>
-
-                    <div className="modal-footer">
-                        <button onClick={closeDialog}>No</button>
-                        <button onClick={handleConfirm} disabled={loading}>Yes</button>
-                    </div>
-                </div>
-            )}
-        </>
+                <Button
+                    className="w-[130px]"
+                    variant="outline"
+                    onClick={handleConfirm}
+                    disabled={loading}
+                >
+                    Yes
+                </Button>
+            </div>
+        </Modal>
     );
 }

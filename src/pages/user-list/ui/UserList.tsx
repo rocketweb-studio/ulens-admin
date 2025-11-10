@@ -24,6 +24,7 @@ export type User = {
 
 export const UserList = () => {
     const [sort, setSort] = useState<SortValue>("NEW")
+    const [openUserId, setOpenUserId] = useState<string | null>(null);
 
     const toggleDateSort = () => {
         setSort(prev => (prev === "NEW" ? "OLD" : "NEW"));
@@ -122,7 +123,8 @@ export const UserList = () => {
             ),
             dataIndex: 'createdAt',
             key: 'dateAdded-column',
-            render: (date, user, isOpenModal=false, setIsOpenModal) => {
+            render: (date, user) => {
+                const isOpen = openUserId === user.id;
                 const formattedDate = new Date(date).toLocaleDateString('ru-RU', {
                     day: '2-digit',
                     month: '2-digit',
@@ -139,7 +141,7 @@ export const UserList = () => {
                         <span style={{color: 'white'}}>
                             {formattedDate}
                         </span>
-                        <button onClick={() => setIsOpenModal!(!isOpenModal)}>
+                        <button onClick={() => setOpenUserId(isOpen ? null : user.id)}>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <g clipPath="url(#clip0_45764_12530)">
@@ -160,7 +162,12 @@ export const UserList = () => {
                                 </defs>
                             </svg>
                         </button>
-                        {isOpenModal&&<UserActionsMenu user={user} setIsOpenModal={setIsOpenModal!}/>}
+                        {isOpen && (
+                            <UserActionsMenu
+                                user={user}
+                                onClose={() => setOpenUserId(null)}
+                            />
+                        )}
                     </div>
                 );
             }
