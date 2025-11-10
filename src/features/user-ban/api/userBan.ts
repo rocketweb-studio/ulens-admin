@@ -1,9 +1,6 @@
 import { useMutation } from '@apollo/client/react'
-import {
-  SetBlockStatusForUserDocument,
-  type SetBlockStatusForUserMutation,
-  type SetBlockStatusForUserMutationVariables,
-} from '@/shared/graphql/generated/graphql'
+import { SetBlockStatusForUserDocument } from '@/shared/graphql/generated/graphql'
+import { getUsersList } from '@/shared/graphql/queries/getUsersList'
 
 export type BlockUserInput = {
   userId: string
@@ -12,7 +9,7 @@ export type BlockUserInput = {
 }
 
 export const useBlockUserMutation = () => {
-  return useMutation<SetBlockStatusForUserMutation, SetBlockStatusForUserMutationVariables>(
-    SetBlockStatusForUserDocument,
-  )
+  return useMutation(SetBlockStatusForUserDocument, {
+    refetchQueries: [getUsersList],
+  })
 }
