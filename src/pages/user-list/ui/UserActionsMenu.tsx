@@ -25,14 +25,16 @@ export const UserActionsMenu = ({user, onClose}:Props) => {
         <>
          <ul
              className={s.dropDownBtnContainer}
-             onClick={onClose}
+             onMouseLeave={() => {
+                 if (!isDeleteOpen) onClose();
+             }}
              tabIndex={0}>
 
 
              <li className={s.dropDownBtn}
              onClick={(e) => {
-                 e.stopPropagation()
-                 setIsDeleteOpen(true)
+                 e.stopPropagation();
+                 setIsDeleteOpen(true);
              }}
              >
 
