@@ -9,7 +9,6 @@ import type { SortValue } from '@/features/user-sort/model/types.ts'
 import { Table } from '@/widgets/table/Table.tsx'
 import type { Column } from '@/widgets/table/TableRow.tsx'
 import { UserActionsMenu } from '@/pages/user-list/ui/UserActionsMenu.tsx'
-import { MoreInformation } from '@/pages/more-information'
 import { SortArrows } from '@/entities/user/userSort/ui/SortArrows.tsx'
 import { UserBan } from '@/features/user-ban'
 import { useModal } from '@/shared/hooks'
@@ -184,8 +183,6 @@ export const UserList = () => {
           <Select options={['Blocked', 'Not Blocked', 'All']} placeholder={'Not Selected'} />
         </div>
       </div>
-      <MoreInformation dataUser={rowsTableUsers[0]!} />
-      {/* для теста */}
       <Table<User> rows={rowsTableUsers} columns={columnsTable} />
       <Pagination elementCount={8} onPageChange={() => {}} />
       <UserBan
