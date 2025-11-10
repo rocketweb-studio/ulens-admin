@@ -168,9 +168,10 @@ export const UserList = () => {
     },
   ]
 
-  if (loading) {
-    return <div>Загрузка...</div>
-  }
+  // if (loading) {
+  //   return <div>Загрузка...</div>
+  // }
+
   if (error) {
     return <div style={{ color: 'red' }}>Ошибка: {error.message}</div>
   }
