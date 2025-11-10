@@ -13,6 +13,7 @@ export const getAllPostsForAdminQuery = graphql(`
         description
         userName
         ownerId
+        isOwnerBlocked
         images {
           medium {
             url

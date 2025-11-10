@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client/react'
 import { SetBlockStatusForUserDocument } from '@/shared/graphql/generated/graphql'
 import { getUsersList } from '@/shared/graphql/queries/getUsersList'
+import { getAllPostsForAdminQuery } from '@/shared/graphql/queries'
 
 export type BlockUserInput = {
   userId: string
@@ -10,6 +11,6 @@ export type BlockUserInput = {
 
 export const useBlockUserMutation = () => {
   return useMutation(SetBlockStatusForUserDocument, {
-    refetchQueries: [getUsersList],
+    refetchQueries: [getUsersList, getAllPostsForAdminQuery],
   })
 }

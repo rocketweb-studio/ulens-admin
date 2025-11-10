@@ -4,7 +4,8 @@ import { useQuery, useSubscription } from '@apollo/client/react'
 import { useEffect, useRef, useState } from 'react'
 import { getPostsSubscription } from '@/shared/graphql/subscription'
 import { getAllPostsForAdminQuery } from '@/shared/graphql/queries'
-import { useDebounce } from '@/shared/hooks'
+import { useDebounce, useModal } from '@/shared/hooks'
+import { UserBan } from '@/features/user-ban'
 
 type PostsData = PostData[]
 
@@ -14,11 +15,20 @@ export const PostsList = () => {
   const [postsData, setPostsData] = useState<PostsData>([])
   const observerTarget = useRef<HTMLDivElement>(null)
   const [hasNextPage, setHasNextPage] = useState<boolean>(true)
+  const { isOpen: isBanModalOpen, closeModal: closeBanModal, openModal: openBanModal } = useModal()
+  const [currentUserId, setCurrentUserId] = useState<string>('')
+  const [currentUserBlockStatus, setCurrentUserBlockStatus] = useState<boolean>(false)
 
   const { data, loading, fetchMore } = useQuery(getAllPostsForAdminQuery, {
     variables: { input: { endCursorPostId: '', pageSize: 5, search: debouncedSearchTerm } },
   })
   const { data: dataSubs } = useSubscription(getPostsSubscription)
+
+  const buttonBlockClickHandler = (id: string, blockedStatus: boolean) => {
+    setCurrentUserId(id)
+    setCurrentUserBlockStatus(blockedStatus)
+    openBanModal()
+  }
 
   console.log(debouncedSearchTerm)
   // Подписка - новые посты добавляются В НАЧАЛО автоматически
@@ -96,7 +106,7 @@ export const PostsList = () => {
       : <>
           <div className='flex flex-wrap gap-[12px]'>
             {postsData.map((el) => (
-              <Post key={el.id} postItem={el} />
+              <Post key={el.id} postItem={el} onUserAction={buttonBlockClickHandler} />
             ))}
           </div>
 
@@ -104,6 +114,12 @@ export const PostsList = () => {
           <div ref={observerTarget} className='py-4 text-center'></div>
         </>
       }
+      <UserBan
+        isOpen={isBanModalOpen}
+        onClose={closeBanModal}
+        userId={currentUserId}
+        isBlocked={currentUserBlockStatus}
+      />
     </section>
   )
 }
