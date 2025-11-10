@@ -13,9 +13,7 @@ type Props = {
 
 export const UserActionsMenu = ({user, onClose}:Props) => {
     const [isDeleteOpen, setIsDeleteOpen] = useState(false)
-    // const deleteUserHandler=()=>{
-    //
-    // }
+
     const bunUnBunHandler=()=>{
 
     }
@@ -25,7 +23,10 @@ export const UserActionsMenu = ({user, onClose}:Props) => {
     }
     return (
         <>
-         <ul  className={s.dropDownBtnContainer} onClick={onClose} onMouseLeave={onClose} tabIndex={0}>
+         <ul
+             className={s.dropDownBtnContainer}
+             onClick={onClose}
+             tabIndex={0}>
 
 
              <li className={s.dropDownBtn}
