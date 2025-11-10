@@ -1,9 +1,8 @@
-import {Input,Pagination,Select} from "@rocketweb-studio/ulens-ui-kit";
+import {Input, Pagination, Select} from "@rocketweb-studio/ulens-ui-kit";
 import s from "./UserList.module.css"
 import {useState} from "react";
 import {useQuery} from "@apollo/client/react";
 import {getUsersList} from "@/shared/graphql/queries/getUsersList.ts";
-import {UsersSortSelect} from "@/features/user-sort";
 import {mapSortToQuery} from "@/features/user-sort/model/mapper.ts";
 import type {SortValue} from "@/features/user-sort/model/types.ts";
 
@@ -184,7 +183,6 @@ export const UserList = () => {
                 </div>
             </div>
             <MoreInformation dataUser={rowsTableUsers[0]!}/>{/* для теста */}
-            <UsersSortSelect value={sort} onChange={setSort}/>
             <Table<User> rows={rowsTableUsers} columns={columnsTable} />
             <Pagination  elementCount={8} onPageChange={()=>{}}/>
         </div>
