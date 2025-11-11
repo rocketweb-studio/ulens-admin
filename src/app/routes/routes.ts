@@ -6,6 +6,7 @@ import { Statistics } from '@/pages/statistics'
 import { RootLayout } from '@/pages/root-layout'
 import { PaymentsList } from '@/pages/payments-list'
 import { PostsList } from '@/pages/posts-list'
+import {MoreInformation} from "@/pages/more-information";
 import { PATH } from '@/shared'
 
 export const router = createBrowserRouter([
@@ -20,6 +21,8 @@ export const router = createBrowserRouter([
           { path: PATH.statistics, Component: Statistics },
           { path: PATH.paymentsList, Component: PaymentsList },
           { path: PATH.postsList, Component: PostsList },
+          {path: PATH.moreInfo, Component: MoreInformation},
+
         ],
       },
     ],

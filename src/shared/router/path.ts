@@ -4,4 +4,5 @@ export const PATH = {
   statistics: '/statistics',
   paymentsList: '/payments-list',
   postsList: '/posts-list',
+  moreInfo: '/more-info',
 } as const

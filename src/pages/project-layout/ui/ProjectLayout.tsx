@@ -6,7 +6,7 @@ export const ProjectLayout = () => {
     <div className='flex '>
       <SidebarWidget />
 
-      <div className='grow pt-[60px] px-[25px]'>
+      <div className='grow pt-[24px] px-[25px]'>
         <Outlet />
       </div>
     </div>

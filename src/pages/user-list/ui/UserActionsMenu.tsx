@@ -3,6 +3,8 @@ import type { User } from '@/pages/user-list'
 import { useState } from 'react'
 import { UserDelete } from '@/entities/user/userDelete/ui/UserDelete.tsx'
 import { IconBlock } from '@rocketweb-studio/ulens-ui-kit'
+import {useNavigate} from "react-router";
+import {PATH} from "@/shared";
 
 type Props = {
   user: User
@@ -12,12 +14,14 @@ type Props = {
 
 export const UserActionsMenu = ({ user, onClose, buttonBlockClickHandler }: Props) => {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
-
+  const navigate = useNavigate()
   const bunUnBunHandler = () => {
     buttonBlockClickHandler?.(user.id, user.isBlocked)
   }
+  const moreInfoHandler = (user:User) => {
+      navigate(PATH.moreInfo, {state: {user}})
+  }
 
-  const moreInfoHandler = () => {}
   return (
     <>
       <ul
@@ -91,7 +95,7 @@ export const UserActionsMenu = ({ user, onClose, buttonBlockClickHandler }: Prop
             </span>
           }
         </li>
-        <li className={s.dropDownBtn} onClick={moreInfoHandler}>
+        <li className={s.dropDownBtn} onClick={()=>moreInfoHandler(user)}>
           <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
             <g clipPath='url(#clip0_45764_12544)'>
               <path

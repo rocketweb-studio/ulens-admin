@@ -46,7 +46,7 @@ export const UserList = () => {
 
   const sortQuery = mapSortToQuery(sort)
 
-  const { data, loading, error } = useQuery(getUsersList, {
+  const { data, error } = useQuery(getUsersList, {
     variables: {
       input: {
         pageNumber: 1,
@@ -168,7 +168,7 @@ export const UserList = () => {
     },
   ]
 
-  // if (loading) {
+  // if (loading && !data) {
   //   return <div>Загрузка...</div>
   // }
 
