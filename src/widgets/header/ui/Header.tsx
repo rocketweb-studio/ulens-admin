@@ -2,7 +2,7 @@ import { IconArrowIosDownOutline, IconFlagUnitedKingdom } from '@rocketweb-studi
 
 export const Header = () => {
   return (
-    <header className='sticky top-0 h-[60px] border-b border-[var(--color-dark-300)] px-[60px] py-3 bg-[var(--color-dark-700)]'>
+    <header className='sticky top-0 h-[60px] border-b border-[var(--color-dark-300)] px-[60px] py-3 bg-[var(--color-dark-700)] z-10'>
       <div className='flex justify-between items-center'>
         <div>
           <span className='large '>Ulens</span>

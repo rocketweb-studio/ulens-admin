@@ -25,10 +25,58 @@ export type FilterByStatus =
   | 'BLOCKED'
   | 'NOT_BLOCKED';
 
+export type FollowerModel = {
+  __typename?: 'FollowerModel';
+  aboutMe?: Maybe<Scalars['String']['output']>;
+  city?: Maybe<Scalars['String']['output']>;
+  country?: Maybe<Scalars['String']['output']>;
+  createdAt: Scalars['String']['output'];
+  dateOfBirth?: Maybe<Scalars['String']['output']>;
+  firstName?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  lastName?: Maybe<Scalars['String']['output']>;
+  userName: Scalars['String']['output'];
+};
+
+export type FollowersResponse = {
+  __typename?: 'FollowersResponse';
+  items: Array<FollowerModel>;
+  pageNumber: Scalars['Float']['output'];
+  pageSize: Scalars['Float']['output'];
+  totalCount: Scalars['Float']['output'];
+};
+
+export type FollowingModel = {
+  __typename?: 'FollowingModel';
+  aboutMe?: Maybe<Scalars['String']['output']>;
+  city?: Maybe<Scalars['String']['output']>;
+  country?: Maybe<Scalars['String']['output']>;
+  createdAt: Scalars['String']['output'];
+  dateOfBirth?: Maybe<Scalars['String']['output']>;
+  firstName?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  lastName?: Maybe<Scalars['String']['output']>;
+  userName: Scalars['String']['output'];
+};
+
+export type FollowingsResponse = {
+  __typename?: 'FollowingsResponse';
+  items: Array<FollowingModel>;
+  pageNumber: Scalars['Float']['output'];
+  pageSize: Scalars['Float']['output'];
+  totalCount: Scalars['Float']['output'];
+};
+
 export type GetAdminPostsInput = {
   endCursorPostId?: InputMaybe<Scalars['String']['input']>;
   pageSize?: InputMaybe<Scalars['Float']['input']>;
   search?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type GetFollowInput = {
+  pageNumber?: InputMaybe<Scalars['Float']['input']>;
+  pageSize?: InputMaybe<Scalars['Float']['input']>;
+  userId: Scalars['String']['input'];
 };
 
 export type GetPaymentsInput = {
@@ -37,6 +85,14 @@ export type GetPaymentsInput = {
   search?: InputMaybe<Scalars['String']['input']>;
   sortBy?: InputMaybe<SortableTransactionFields>;
   sortDirection?: InputMaybe<SortDirection>;
+};
+
+export type GetUserPaymentsInput = {
+  pageNumber?: InputMaybe<Scalars['Float']['input']>;
+  pageSize?: InputMaybe<Scalars['Float']['input']>;
+  sortBy?: InputMaybe<SortableTransactionFields>;
+  sortDirection?: InputMaybe<SortDirection>;
+  userId: Scalars['String']['input'];
 };
 
 export type GetUsersInput = {
@@ -136,6 +192,9 @@ export type Query = {
   __typename?: 'Query';
   getAllPostsForAdmin: PostsResponse;
   getPaymentsForAdmin: TransactionsResponseForAdmin;
+  getUserFollowers: FollowersResponse;
+  getUserFollowings: FollowingsResponse;
+  getUserPayments: TransactionsResponse;
   getUsers: UsersResponse;
 };
 
@@ -147,6 +206,21 @@ export type QueryGetAllPostsForAdminArgs = {
 
 export type QueryGetPaymentsForAdminArgs = {
   input: GetPaymentsInput;
+};
+
+
+export type QueryGetUserFollowersArgs = {
+  input: GetFollowInput;
+};
+
+
+export type QueryGetUserFollowingsArgs = {
+  input: GetFollowInput;
+};
+
+
+export type QueryGetUserPaymentsArgs = {
+  input: GetUserPaymentsInput;
 };
 
 
@@ -185,7 +259,7 @@ export type TransactionModel = {
   __typename?: 'TransactionModel';
   amount: Scalars['Float']['output'];
   currency: Scalars['String']['output'];
-  expiresAt: Scalars['String']['output'];
+  expiresAt?: Maybe<Scalars['String']['output']>;
   id: Scalars['Float']['output'];
   interval: Scalars['String']['output'];
   provider: Scalars['String']['output'];
@@ -202,6 +276,14 @@ export type TransactionModelForAdmin = {
   provider: Scalars['String']['output'];
   status: Scalars['String']['output'];
   user: UserModelForAdmin;
+};
+
+export type TransactionsResponse = {
+  __typename?: 'TransactionsResponse';
+  items: Array<TransactionModel>;
+  page: Scalars['Float']['output'];
+  pageSize: Scalars['Float']['output'];
+  totalCount: Scalars['Float']['output'];
 };
 
 export type TransactionsResponseForAdmin = {
@@ -224,10 +306,10 @@ export type UserModel = {
 
 export type UserModelForAdmin = {
   __typename?: 'UserModelForAdmin';
-  avatar: Scalars['String']['output'];
-  firstName: Scalars['String']['output'];
+  avatar?: Maybe<Scalars['String']['output']>;
+  firstName?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
-  lastName: Scalars['String']['output'];
+  lastName?: Maybe<Scalars['String']['output']>;
   userName: Scalars['String']['output'];
 };
 
@@ -260,6 +342,20 @@ export type GetAllPostsQueryVariables = Exact<{
 
 export type GetAllPostsQuery = { __typename?: 'Query', getAllPostsForAdmin: { __typename?: 'PostsResponse', pageInfo: { __typename?: 'PageInfoModel', hasNextPage: boolean }, items: Array<{ __typename?: 'PostModel', id: string, avatarOwner?: string | null, createdAt: string, description: string, userName: string, ownerId: string, isOwnerBlocked: boolean, images: { __typename?: 'PostImageModel', medium: Array<{ __typename?: 'ImageModel', url: string }> } }> } };
 
+export type GetPaymentsForAdminQueryVariables = Exact<{
+  input: GetPaymentsInput;
+}>;
+
+
+export type GetPaymentsForAdminQuery = { __typename?: 'Query', getPaymentsForAdmin: { __typename?: 'TransactionsResponseForAdmin', page: number, pageSize: number, totalCount: number, items: Array<{ __typename?: 'TransactionModelForAdmin', amount: number, createdAt: string, currency: string, id: number, interval: string, provider: string, status: string, user: { __typename?: 'UserModelForAdmin', avatar?: string | null, firstName?: string | null, id: string, lastName?: string | null, userName: string } }> } };
+
+export type GetUserPaymentsQueryVariables = Exact<{
+  input: GetUserPaymentsInput;
+}>;
+
+
+export type GetUserPaymentsQuery = { __typename?: 'Query', getUserPayments: { __typename?: 'TransactionsResponse', page: number, pageSize: number, totalCount: number, items: Array<{ __typename?: 'TransactionModel', amount: number, currency: string, expiresAt?: string | null, id: number, interval: string, provider: string, status: string }> } };
+
 export type GetUsersQueryVariables = Exact<{
   input: GetUsersInput;
 }>;
@@ -283,6 +379,8 @@ export type GetPostsSubscription = { __typename?: 'Subscription', newPostAdded: 
 export const DeleteUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DeleteUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<DeleteUserMutation, DeleteUserMutationVariables>;
 export const SetBlockStatusForUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"setBlockStatusForUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SetBlockStatusForUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"setBlockStatusForUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<SetBlockStatusForUserMutation, SetBlockStatusForUserMutationVariables>;
 export const GetAllPostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getAllPosts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GetAdminPostsInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllPostsForAdmin"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}}]}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"avatarOwner"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}},{"kind":"Field","name":{"kind":"Name","value":"ownerId"}},{"kind":"Field","name":{"kind":"Name","value":"isOwnerBlocked"}},{"kind":"Field","name":{"kind":"Name","value":"images"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"medium"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetAllPostsQuery, GetAllPostsQueryVariables>;
+export const GetPaymentsForAdminDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getPaymentsForAdmin"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GetPaymentsInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getPaymentsForAdmin"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"page"}},{"kind":"Field","name":{"kind":"Name","value":"pageSize"}},{"kind":"Field","name":{"kind":"Name","value":"totalCount"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"interval"}},{"kind":"Field","name":{"kind":"Name","value":"provider"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"avatar"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetPaymentsForAdminQuery, GetPaymentsForAdminQueryVariables>;
+export const GetUserPaymentsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getUserPayments"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GetUserPaymentsInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getUserPayments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"page"}},{"kind":"Field","name":{"kind":"Name","value":"pageSize"}},{"kind":"Field","name":{"kind":"Name","value":"totalCount"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"expiresAt"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"interval"}},{"kind":"Field","name":{"kind":"Name","value":"provider"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetUserPaymentsQuery, GetUserPaymentsQueryVariables>;
 export const GetUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUsers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GetUsersInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getUsers"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"isBlocked"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"page"}},{"kind":"Field","name":{"kind":"Name","value":"pageSize"}},{"kind":"Field","name":{"kind":"Name","value":"totalCount"}}]}}]}}]} as unknown as DocumentNode<GetUsersQuery, GetUsersQueryVariables>;
 export const SingInDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"singIn"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginAdminInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"loginAdmin"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"adminAccessToken"}}]}}]}}]} as unknown as DocumentNode<SingInMutation, SingInMutationVariables>;
 export const GetPostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"getPosts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"newPostAdded"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"avatarOwner"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"images"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"medium"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetPostsSubscription, GetPostsSubscriptionVariables>;
