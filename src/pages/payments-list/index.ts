@@ -1,1 +1,1 @@
-export * from './ui/Paymentslist.tsx'
+export * from './ui/PaymentsList.tsx'
