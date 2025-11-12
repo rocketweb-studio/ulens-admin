@@ -69,7 +69,7 @@ const paymentColumns: Column<Payment>[] = [
 
 export const PaymentsList = () => {
   const [search, setSearch] = useState('')
-  const [pageSize, setPageSize] = useState<number>(3)
+  const [pageSize, setPageSize] = useState<number>(10)
   const [currentPage, setCurrentPage] = useState<number>(1)
 
   const debouncedSearchTerm = useDebounce(search, 1000)
