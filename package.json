@@ -16,7 +16,7 @@
     "@apollo/client": "^4.0.7",
     "@graphql-typed-document-node/core": "^3.2.0",
     "@hookform/resolvers": "^5.2.2",
-    "@rocketweb-studio/ulens-ui-kit": "^0.9.11",
+    "@rocketweb-studio/ulens-ui-kit": "^0.9.12",
     "@tailwindcss/vite": "^4.1.14",
     "clsx": "^2.1.1",
     "graphql": "^16.11.0",
