@@ -75,19 +75,17 @@ export const ShowPayments = ({ userId }: Props) => {
 
   return (
     <div>
-      {loading && !data?.getUserPayments.items.length ?
-        <div>Loading...</div>
-      : <CustomTable
-          data={dataForTable || []}
-          columns={columns}
-          currentPage={currentPage}
-          onPageChange={(page) => setCurrentPage(page)}
-          pageSize={pageSize}
-          onPageSizeChange={(pageSize) => setPageSize(pageSize)}
-          elementCount={data?.getUserPayments.totalCount}
-          paginated
-        ></CustomTable>
-      }
+      <CustomTable
+        data={dataForTable || []}
+        columns={columns}
+        currentPage={currentPage}
+        onPageChange={(page) => setCurrentPage(page)}
+        pageSize={pageSize}
+        onPageSizeChange={(pageSize) => setPageSize(pageSize)}
+        elementCount={data?.getUserPayments.totalCount}
+        paginated
+        loading={loading}
+      ></CustomTable>
     </div>
   )
 }

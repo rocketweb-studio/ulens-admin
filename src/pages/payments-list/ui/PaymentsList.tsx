@@ -27,7 +27,9 @@ const paymentColumns: Column<Payment>[] = [
     sortable: true,
     render: (value: string) => (
       <div className={'flex gap-x-3 items-center'}>
-        <UserAvatar userName={value} mode={'size'} width={36} height={36}></UserAvatar>
+        <div className={'shrink-0'}>
+          <UserAvatar userName={value} mode={'size'} width={36} height={36}></UserAvatar>
+        </div>
         <span>{value}</span>
       </div>
     ),
@@ -113,6 +115,7 @@ export const PaymentsList = () => {
         onPageChange={(page) => setCurrentPage(page)}
         onPageSizeChange={(pageSize) => setPageSize(pageSize)}
         pageSize={pageSize}
+        loading={loading}
       ></CustomTable>
     </section>
   )
