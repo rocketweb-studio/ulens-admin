@@ -12,6 +12,7 @@ import { UserActionsMenu } from '@/pages/user-list/ui/UserActionsMenu.tsx'
 import { SortArrows } from '@/entities/user/userSort/ui/SortArrows.tsx'
 import { UserBan } from '@/features/user-ban'
 import { useModal } from '@/shared/hooks'
+import { formattedDateDDMMYYYY } from '@/shared/utils/formattedDate.ts'
 
 export type User = {
   id: string
@@ -119,11 +120,7 @@ const  paginationHandler = (p:number)=>{
       key: 'dateAdded-column',
       render: (date, user) => {
         const isOpen = openUserId === user.id
-        const formattedDate = new Date(date).toLocaleDateString('ru-RU', {
-          day: '2-digit',
-          month: '2-digit',
-          year: 'numeric',
-        })
+        const formattedDate =formattedDateDDMMYYYY(date)
 
         return (
           <div

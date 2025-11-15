@@ -1,23 +1,142 @@
 import { Button, Pagination, Tabs } from '@rocketweb-studio/ulens-ui-kit'
 import { Link, useLocation, useNavigate } from 'react-router'
 import { useState } from 'react'
+import { formattedDateDDMMYYYY } from '@/shared/utils/formattedDate.ts'
+import { getUserFollowers } from '@/shared/graphql/queries/getUserFollowers.ts'
+
+
+type TabsSettingsType={title:'Uploaded photos'|'Payments'|'Followers'|'Following'}
 
 
 export const MoreInformation = () => {
+  const data=getUserFollowers({
+    variables:{input:{
+        pageNumber: 1,
+        pageSize: 10,
+        userId: "String!"
+      }
+    }
+  })
+
   const navigate = useNavigate()
   const location = useLocation()
+  const [activeTab, setActiveTab] = useState<string>('Uploaded photos')
   const { user } = location.state || {}
-  const tabsSettings: { title: string }[] = [
+  const openActiveTab = (active: string) => {
+    setActiveTab(active)
+    return data
+  }
+  const tabsSettings: TabsSettingsType[] = [
     { title: 'Uploaded photos' },
     { title: 'Payments' },
     { title: 'Followers' },
     { title: 'Following' }
   ]
-  const [activeTab, setActiveTab] = useState<string>('Uploaded photos')
+  // const rowTableFollow={
+  //   userId:"User Id",
+  //   profileLink:"Profile Link",
+  //   userName:"Username",
+  //   subscriptionDate:"Subscription Date",
+  // }
+  //
+  // const columnsTable: Column<User>[] = [
+  //   {
+  //     title: 'User ID',
+  //     dataIndex: 'id',
+  //     key: 'userId-column',
+  //     render: (userId, { isBlocked }) => (
+  //       <div style={{ display: 'flex', gap: '12px', flexDirection: 'row' }}>
+  //         {isBlocked ?
+  //           <IconBlock />
+  //           : <div className={'w-6 h-6'}></div>}
+  //         <span style={{ color: 'white' }}>{userId}</span>
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     title: (
+  //       <div className={s.sortHeader} onClick={() => toggleProfileSort()}>
+  //         Profile link
+  //         <SortArrows active={sort === 'AZ' || sort === 'ZA'} direction={sort === 'AZ' ? 'ASC' : 'DESC'} />
+  //       </div>
+  //     ),
+  //     dataIndex: 'profileLink',
+  //     key: 'profileLink-column',
+  //     render: (_, { firstName, lastName, profileLink }) => (
+  //       <a href={profileLink} target='_blank' rel='noopener noreferrer' className={s.link}>
+  //         {`${firstName} ${lastName}`}
+  //       </a>
+  //     ),
+  //   },
+  //   {
+  //     title: 'Username',
+  //     dataIndex: 'userName',
+  //     key: 'userName-column',
+  //     render: (_, { userName }) => <span style={{ color: 'white' }}> {userName}</span>,
+  //   },
+  //   {
+  //     title: (
+  //       <div className={s.sortHeader} onClick={() => toggleDateSort()}>
+  //         Date added
+  //         <SortArrows active={sort === 'NEW' || sort === 'OLD'} direction={sort === 'NEW' ? 'DESC' : 'ASC'} />
+  //       </div>
+  //     ),
+  //     dataIndex: 'createdAt',
+  //     key: 'dateAdded-column',
+  //     render: (date, user) => {
+  //       const isOpen = openUserId === user.id
+  //       const formattedDate = new Date(date).toLocaleDateString('ru-RU', {
+  //         day: '2-digit',
+  //         month: '2-digit',
+  //         year: 'numeric',
+  //       })
+  //
+  //       return (
+  //         <div
+  //           style={{
+  //             display: 'flex',
+  //             flexDirection: 'row',
+  //             justifyContent: 'space-between',
+  //             position: 'relative',
+  //           }}
+  //         >
+  //           <span style={{ color: 'white' }}>{formattedDate}</span>
+  //           <button onClick={() => setOpenUserId(isOpen ? null : user.id)}>
+  //             <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+  //               <g clipPath='url(#clip0_45764_12530)'>
+  //                 <path
+  //                   d='M12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14Z'
+  //                   fill='white'
+  //                 />
+  //                 <path
+  //                   d='M19 14C20.1046 14 21 13.1046 21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 10.8954 17 12C17 13.1046 17.8954 14 19 14Z'
+  //                   fill='white'
+  //                 />
+  //                 <path
+  //                   d='M5 14C6.10457 14 7 13.1046 7 12C7 10.8954 6.10457 10 5 10C3.89543 10 3 10.8954 3 12C3 13.1046 3.89543 14 5 14Z'
+  //                   fill='white'
+  //                 />
+  //               </g>
+  //               <defs>
+  //                 <clipPath id='clip0_45764_12530'>
+  //                   <rect width='24' height='24' fill='white' />
+  //                 </clipPath>
+  //               </defs>
+  //             </svg>
+  //           </button>
+  //           {isOpen && (
+  //             <UserActionsMenu
+  //               user={user}
+  //               onClose={() => setOpenUserId(null)}
+  //               buttonBlockClickHandler={buttonBlockClickHandler}
+  //             />
+  //           )}
+  //         </div>
+  //       )
+  //     },
+  //   },
+  // ]
 
-  const openActiveTab = (active: string) => {
-    setActiveTab(active)
-  }
 
   return (
     <>
@@ -43,21 +162,21 @@ export const MoreInformation = () => {
               </div>
               <div className={'flex gap-[50px] mt-[38px]'}>
                                 <span
-                                  className={'relative after:content-[\'UserID\'] after:absolute after:top-[-22px] after:left-0 after:text-[#8D9094] after:text-[14px] font-light text-[14px] '}>{user.id}</span>
+                                  className={'relative after:content-["UserID"] after:absolute after:top-[-22px] after:left-0 after:text-[#8D9094] after:text-[14px] font-light text-[14px] '}>{user.id}</span>
                 <span
-                  className={'relative after:content-[\'ProfileCreationDate\'] after:absolute after:top-[-22px] after:left-0 after:text-[#8D9094] after:text-[14px] font-light text-[14px]'}>{user.createdAt}</span>
+                  className={'relative  after:content-["ProfileCreationDate"] after:absolute after:top-[-22px] after:left-0 after:text-[#8D9094] after:text-[14px] font-light text-[14px]'}>{formattedDateDDMMYYYY(user.createdAt)}</span>
               </div>
             </div>
             <div>
         <div className={'mt-[30px] mb-[35px]'}>
           <Tabs tabsSettings={tabsSettings} openActiveTab={openActiveTab} />
         </div>
-          {activeTab==='Uploaded photos'&&<div></div>}
+          {activeTab==='Uploaded photos'&&<div>Uploaded photos</div>}
           {/*{activeTab==='Payments'&&<div><Table rows={} columns={}/></div>}*/}
-          {activeTab==='Followers'&&<div></div>}
-          {activeTab==='Following'&&<div></div>}
+          {/*{activeTab==='Followers'&&<div><Table rows={rowTableFollow} columns={}/></div>}*/}
+          {/*{activeTab==='Following'&&<div><Table rows={rowTableFollow} columns={}/></div>}*/}
             </div>
-          <Pagination elementCount={16} onPageChange={() => {}} />
+            {activeTab!=="Uploaded photos"&&<Pagination elementCount={8} onPageChange={() => {}} />}
           </div>
           : <div className={'text-4xl'}>The user was not found</div>}
       </div>
