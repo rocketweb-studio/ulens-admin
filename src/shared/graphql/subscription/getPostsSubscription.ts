@@ -8,6 +8,8 @@ export const getPostsSubscription = graphql(`
       description
       avatarOwner
       createdAt
+      isOwnerBlocked
+      ownerId
       images {
         medium {
           url

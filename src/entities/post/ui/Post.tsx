@@ -8,7 +8,7 @@ export type PostData = Pick<PostModel, 'id' | 'createdAt' | 'description' | 'ava
     medium: Array<Pick<ImageModel, 'url'>>
   }
   ownerId: string
-  isOwnerBlocked?: boolean
+  isOwnerBlocked: boolean
 }
 
 type Props = {
