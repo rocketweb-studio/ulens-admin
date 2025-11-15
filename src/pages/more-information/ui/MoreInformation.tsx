@@ -1,9 +1,40 @@
 import { Button, CustomTable, Pagination, Tabs } from '@rocketweb-studio/ulens-ui-kit'
 import { Link, useLocation, useNavigate } from 'react-router'
 import { useState } from 'react'
+import { formattedDateDDMMYYYY } from '@/shared/utils/formattedDate.ts'
+
+
+type TabsSettingsType={title:'Uploaded photos'|'Payments'|'Followers'|'Following'}
+
 import { ShowPayments } from '@/features/show-payments'
 
 export const MoreInformation = () => {
+  // const {data:followings}=useQuery( getUserFollowingsQuery,{
+  //   variables:{input:{
+  //       pageNumber: 1,
+  //       pageSize: 10,
+  //       userId: ""
+  //     }
+  //   }
+  // })
+  // const {data:followers}=useQuery(getUserFollowersQuery,{
+  //   variables:{input:{
+  //       pageNumber: 1,
+  //       pageSize: 10,
+  //       userId: ""
+  //     }
+  //   }
+  // })
+  // const {data:photos}=useQuery( getPhotosFromPostsForAdminQuery,{variables:{
+  //  input: {
+  //    endCursorPostId: 'cursor',
+  //    pageSize: 10,
+  //    search: ""
+  //  }
+  // }
+  // })
+
+
   const navigate = useNavigate()
   const location = useLocation()
   const { user } = location.state || {}
@@ -11,7 +42,7 @@ export const MoreInformation = () => {
     { title: 'Uploaded photos' },
     { title: 'Payments' },
     { title: 'Followers' },
-    { title: 'Following' },
+    { title: 'Following' }
   ]
   const [activeTab, setActiveTab] = useState<string>('Uploaded photos')
 
@@ -57,20 +88,10 @@ export const MoreInformation = () => {
                 </div>
               </div>
               <div className={'flex gap-[50px] mt-[38px]'}>
+                                <span
+                                  className={'relative after:content-["UserID"] after:absolute after:top-[-22px] after:left-0 after:text-[#8D9094] after:text-[14px] font-light text-[14px] '}>{user.id}</span>
                 <span
-                  className={
-                    "relative after:content-['UserID'] after:absolute after:top-[-22px] after:left-0 after:text-[#8D9094] after:text-[14px] font-light text-[14px] "
-                  }
-                >
-                  {user.id}
-                </span>
-                <span
-                  className={
-                    "relative after:content-['ProfileCreationDate'] after:absolute after:top-[-22px] after:left-0 after:text-[#8D9094] after:text-[14px] font-light text-[14px]"
-                  }
-                >
-                  {user.createdAt}
-                </span>
+                  className={'relative  after:content-["ProfileCreationDate"] after:absolute after:top-[-22px] after:left-0 after:text-[#8D9094] after:text-[14px] font-light text-[14px]'}>{formattedDateDDMMYYYY(user.createdAt)}</span>
               </div>
             </div>
             <div>
@@ -86,10 +107,11 @@ export const MoreInformation = () => {
               {activeTab === 'Followers' && <div></div>}
               {activeTab === 'Following' && <div></div>}
             </div>
-            {/*<Pagination elementCount={16} onPageChange={() => {}} />*/}
+            {activeTab!=="Uploaded photos"&&<Pagination elementCount={8} onPageChange={() => {}} />}
           </div>
-        : <div className={'text-4xl'}>The user was not found</div>}
+          : <div className={'text-4xl'}>The user was not found</div>}
       </div>
     </>
   )
 }
+

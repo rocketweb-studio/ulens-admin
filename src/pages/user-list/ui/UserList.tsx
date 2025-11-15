@@ -12,6 +12,7 @@ import { UserActionsMenu } from '@/pages/user-list/ui/UserActionsMenu.tsx'
 import { SortArrows } from '@/entities/user/userSort/ui/SortArrows.tsx'
 import { UserBan } from '@/features/user-ban'
 import { useModal } from '@/shared/hooks'
+import { formattedDateDDMMYYYY } from '@/shared/utils/formattedDate.ts'
 
 export type User = {
   id: string
@@ -45,12 +46,13 @@ export const UserList = () => {
   }
 
   const sortQuery = mapSortToQuery(sort)
-
+  const [page, setPage] = useState<number>(1)
+const [pageSize, setPageSize] = useState<number>(8)
   const { data, error } = useQuery(getUsersList, {
     variables: {
       input: {
-        pageNumber: 1,
-        pageSize: 8,
+        pageNumber: page,
+        pageSize: pageSize,
         filterByStatus: 'ALL',
         search: '',
         sortBy: sortQuery.sortBy,
@@ -58,7 +60,9 @@ export const UserList = () => {
       },
     },
   })
-
+const  paginationHandler = (p:number)=>{
+    setPage(p)
+}
   const rowsTableUsers: User[] =
     data?.getUsers.items.map((user) => ({
       id: user.id,
@@ -116,11 +120,7 @@ export const UserList = () => {
       key: 'dateAdded-column',
       render: (date, user) => {
         const isOpen = openUserId === user.id
-        const formattedDate = new Date(date).toLocaleDateString('ru-RU', {
-          day: '2-digit',
-          month: '2-digit',
-          year: 'numeric',
-        })
+        const formattedDate =formattedDateDDMMYYYY(date)
 
         return (
           <div
@@ -185,7 +185,7 @@ export const UserList = () => {
         </div>
       </div>
       <Table<User> rows={rowsTableUsers} columns={columnsTable} />
-      <Pagination elementCount={8} onPageChange={() => {}} />
+      <Pagination pageSize={pageSize} onPageSizeChange={setPageSize}  elementCount={data?.getUsers.totalCount||0} onPageChange={(e)=>paginationHandler(e.page)} />
       <UserBan
         isOpen={isBanModalOpen}
         onClose={closeBanModal}
