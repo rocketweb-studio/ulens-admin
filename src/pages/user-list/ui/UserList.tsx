@@ -45,12 +45,13 @@ export const UserList = () => {
   }
 
   const sortQuery = mapSortToQuery(sort)
-
+  const [page, setPage] = useState<number>(1)
+const [pageSize, setPageSize] = useState<number>(8)
   const { data, error } = useQuery(getUsersList, {
     variables: {
       input: {
-        pageNumber: 1,
-        pageSize: 8,
+        pageNumber: page,
+        pageSize: pageSize,
         filterByStatus: 'ALL',
         search: '',
         sortBy: sortQuery.sortBy,
@@ -58,7 +59,9 @@ export const UserList = () => {
       },
     },
   })
-
+const  paginationHandler = (p:number)=>{
+    setPage(p)
+}
   const rowsTableUsers: User[] =
     data?.getUsers.items.map((user) => ({
       id: user.id,
@@ -185,7 +188,7 @@ export const UserList = () => {
         </div>
       </div>
       <Table<User> rows={rowsTableUsers} columns={columnsTable} />
-      <Pagination elementCount={8} onPageChange={() => {}} />
+      <Pagination pageSize={pageSize} onPageSizeChange={setPageSize}  elementCount={data?.getUsers.totalCount||0} onPageChange={(e)=>paginationHandler(e.page)} />
       <UserBan
         isOpen={isBanModalOpen}
         onClose={closeBanModal}
