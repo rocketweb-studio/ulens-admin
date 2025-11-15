@@ -1,7 +1,7 @@
 import { graphql } from '../generated/gql'
 
-export const getUserFollowings = graphql(`
-    query getFollowings($input:GetFollowInput!){
+export const getUserFollowingsQuery = graphql(`
+    query getUserFollowings($input:GetFollowInput!){
         getUserFollowings(input:$input) {
             items {
                 aboutMe
@@ -9,6 +9,7 @@ export const getUserFollowings = graphql(`
                 country
                 createdAt
                 dateOfBirth
+                createdAt
                 firstName
                 id
                 lastName

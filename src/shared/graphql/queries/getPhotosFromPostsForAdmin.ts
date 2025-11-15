@@ -1,6 +1,6 @@
 import { graphql } from '../generated/gql'
 
-export const getPhotosFromPostsForAdmin = graphql(`
+export const getPhotosFromPostsForAdminQuery = graphql(`
   query getPhotos($input: GetAdminPostsInput!) {
     getAllPostsForAdmin(input: $input) {
       pageInfo {

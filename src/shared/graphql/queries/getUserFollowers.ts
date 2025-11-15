@@ -1,18 +1,13 @@
 import { graphql } from '../generated/gql'
 
-export const getUserFollowers = graphql(`
-    query getFollowers($input:GetFollowInput!){
+export const getUserFollowersQuery = graphql(`
+    query getUserFollowers($input:GetFollowInput!){
         getUserFollowers(input:$input) {
             items {
-                aboutMe
-                city
-                country
                 createdAt
-                dateOfBirth
-                firstName
                 id
-                lastName
                 userName
+                createdAt
             }
             pageNumber
             pageSize

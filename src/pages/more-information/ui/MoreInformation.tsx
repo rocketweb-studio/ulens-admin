@@ -2,21 +2,41 @@ import { Button, Pagination, Tabs } from '@rocketweb-studio/ulens-ui-kit'
 import { Link, useLocation, useNavigate } from 'react-router'
 import { useState } from 'react'
 import { formattedDateDDMMYYYY } from '@/shared/utils/formattedDate.ts'
-import { getUserFollowers } from '@/shared/graphql/queries/getUserFollowers.ts'
+import { getUserFollowingsQuery } from '@/shared/graphql/queries/getUserFollowings.ts'
+import { useQuery } from '@apollo/client/react'
+import { getUserFollowersQuery } from '@/shared/graphql/queries/getUserFollowers.ts'
+import { getPhotosFromPostsForAdminQuery } from '@/shared/graphql/queries/getPhotosFromPostsForAdmin.ts'
 
 
 type TabsSettingsType={title:'Uploaded photos'|'Payments'|'Followers'|'Following'}
 
 
 export const MoreInformation = () => {
-  const data=getUserFollowers({
+  const {data:followings}=useQuery( getUserFollowingsQuery,{
     variables:{input:{
         pageNumber: 1,
         pageSize: 10,
-        userId: "String!"
+        userId: ""
       }
     }
   })
+  const {data:followers}=useQuery( getUserFollowersQuery,{
+    variables:{input:{
+        pageNumber: 1,
+        pageSize: 10,
+        userId: ""
+      }
+    }
+  })
+  const {data:photos}=useQuery( getPhotosFromPostsForAdminQuery,{variables:{
+   input: {
+     endCursorPostId: 'cursor',
+     pageSize: 10,
+     search: ""
+   }
+  }
+  })
+
 
   const navigate = useNavigate()
   const location = useLocation()
@@ -24,7 +44,6 @@ export const MoreInformation = () => {
   const { user } = location.state || {}
   const openActiveTab = (active: string) => {
     setActiveTab(active)
-    return data
   }
   const tabsSettings: TabsSettingsType[] = [
     { title: 'Uploaded photos' },
