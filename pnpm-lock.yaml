@@ -18,8 +18,8 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2(react-hook-form@7.65.0(react@19.2.0))
       '@rocketweb-studio/ulens-ui-kit':
-        specifier: ^0.9.13
-        version: 0.9.13
+        specifier: ^0.9.14
+        version: 0.9.14
       '@tailwindcss/vite':
         specifier: ^4.1.14
         version: 4.1.14(vite@7.1.10(@types/node@24.8.1)(jiti@2.6.1)(lightningcss@1.30.1)(yaml@2.8.1))
@@ -942,8 +942,8 @@ packages:
   '@repeaterjs/repeater@3.0.6':
     resolution: {integrity: sha512-Javneu5lsuhwNCryN+pXH93VPQ8g0dBX7wItHFgYiwQmzE1sVdg5tWHiOgHywzL2W21XQopa7IwIEnNbmeUJYA==}
 
-  '@rocketweb-studio/ulens-ui-kit@0.9.13':
-    resolution: {integrity: sha512-qi8M4BXt6SZFLSAWgxJciv3sSLO5Tbf6tmqyghFV2q/CWCsEBiDeQR6h/c2i2j0nKKM1WvfTVFzOmVKEcGz4ZA==}
+  '@rocketweb-studio/ulens-ui-kit@0.9.14':
+    resolution: {integrity: sha512-gSN+fFOrtWDXAzhlCjngZIWPFgXulcur2lBCOuLRGP2/bUv5oEjCxmWSwJhSV6Qxo2vntVj0HJ3vPgTyjKUzTw==}
 
   '@rolldown/pluginutils@1.0.0-beta.38':
     resolution: {integrity: sha512-N/ICGKleNhA5nc9XXQG/kkKHJ7S55u0x0XUJbbkmdCnFuoRkM1Il12q9q0eX19+M7KKUEPw/daUPIRnxhcxAIw==}
@@ -3626,7 +3626,7 @@ snapshots:
 
   '@repeaterjs/repeater@3.0.6': {}
 
-  '@rocketweb-studio/ulens-ui-kit@0.9.13':
+  '@rocketweb-studio/ulens-ui-kit@0.9.14':
     dependencies:
       clsx: 2.1.1
       framer-motion: 12.23.24(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
