@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { useQuery } from '@apollo/client/react'
 import { getPaymentsForAdminQuery } from '@/shared/graphql/queries'
 import { useDebounce } from '@/shared/hooks'
+import { formattedDateDDMMYYYY } from '@/shared/utils/formattedDate'
 
 export type Payment = {
   id: number
@@ -43,7 +44,7 @@ const paymentColumns: Column<Payment>[] = [
     title: 'Date added',
     width: '120px',
     sortable: true,
-    render: (value: string) => new Date(value).toLocaleDateString('en-GB'),
+    render: (value: string) => formattedDateDDMMYYYY(value),
   },
   {
     key: 'amount',

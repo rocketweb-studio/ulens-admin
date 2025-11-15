@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client/react'
 import { getUserPaymentsQuery } from '@/shared/graphql/queries'
 import { CustomTable } from '@rocketweb-studio/ulens-ui-kit'
 import type { Column } from '@rocketweb-studio/ulens-ui-kit/dist/components/CustomTable/types'
+import { formattedDateDDMMYYYY } from '@/shared/utils/formattedDate'
 
 type Props = {
   userId: string
@@ -59,8 +60,8 @@ export const ShowPayments = ({ userId }: Props) => {
 
   const dataForTable = data?.getUserPayments.items.map(
     (item): Payment => ({
-      dateOfPayment: item.expiresAt ? new Date(item.expiresAt).toLocaleDateString('en-GB') : '',
-      endSubscription: item.expiresAt ? new Date(item.expiresAt).toLocaleDateString('en-GB') : '',
+      dateOfPayment: item.expiresAt ? formattedDateDDMMYYYY(item.expiresAt) : '',
+      endSubscription: item.expiresAt ? formattedDateDDMMYYYY(item.expiresAt) : '',
       amount: item.amount,
       subscriptionType: item.interval,
       paymentType: item.provider,
