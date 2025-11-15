@@ -4,17 +4,10 @@ export const getUserFollowingsQuery = graphql(`
     query getUserFollowings($input:GetFollowInput!){
         getUserFollowings(input:$input) {
             items {
-                aboutMe
-                city
-                country
                 createdAt
-                dateOfBirth
-                createdAt
-                firstName
                 id
-                lastName
                 userName
-
+                createdAt
             }
             pageNumber
             pageSize

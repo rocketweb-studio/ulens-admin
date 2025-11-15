@@ -2,40 +2,36 @@ import { Button, Pagination, Tabs } from '@rocketweb-studio/ulens-ui-kit'
 import { Link, useLocation, useNavigate } from 'react-router'
 import { useState } from 'react'
 import { formattedDateDDMMYYYY } from '@/shared/utils/formattedDate.ts'
-import { getUserFollowingsQuery } from '@/shared/graphql/queries/getUserFollowings.ts'
-import { useQuery } from '@apollo/client/react'
-import { getUserFollowersQuery } from '@/shared/graphql/queries/getUserFollowers.ts'
-import { getPhotosFromPostsForAdminQuery } from '@/shared/graphql/queries/getPhotosFromPostsForAdmin.ts'
 
 
 type TabsSettingsType={title:'Uploaded photos'|'Payments'|'Followers'|'Following'}
 
 
 export const MoreInformation = () => {
-  const {data:followings}=useQuery( getUserFollowingsQuery,{
-    variables:{input:{
-        pageNumber: 1,
-        pageSize: 10,
-        userId: ""
-      }
-    }
-  })
-  const {data:followers}=useQuery( getUserFollowersQuery,{
-    variables:{input:{
-        pageNumber: 1,
-        pageSize: 10,
-        userId: ""
-      }
-    }
-  })
-  const {data:photos}=useQuery( getPhotosFromPostsForAdminQuery,{variables:{
-   input: {
-     endCursorPostId: 'cursor',
-     pageSize: 10,
-     search: ""
-   }
-  }
-  })
+  // const {data:followings}=useQuery( getUserFollowingsQuery,{
+  //   variables:{input:{
+  //       pageNumber: 1,
+  //       pageSize: 10,
+  //       userId: ""
+  //     }
+  //   }
+  // })
+  // const {data:followers}=useQuery(getUserFollowersQuery,{
+  //   variables:{input:{
+  //       pageNumber: 1,
+  //       pageSize: 10,
+  //       userId: ""
+  //     }
+  //   }
+  // })
+  // const {data:photos}=useQuery( getPhotosFromPostsForAdminQuery,{variables:{
+  //  input: {
+  //    endCursorPostId: 'cursor',
+  //    pageSize: 10,
+  //    search: ""
+  //  }
+  // }
+  // })
 
 
   const navigate = useNavigate()
@@ -52,10 +48,10 @@ export const MoreInformation = () => {
     { title: 'Following' }
   ]
   // const rowTableFollow={
-  //   userId:"User Id",
-  //   profileLink:"Profile Link",
-  //   userName:"Username",
-  //   subscriptionDate:"Subscription Date",
+  //   id:"followers.getUserFollowers.items[0]" ,
+  //   profileLink:"profileLink" ,
+  //   userName:"userName" ,
+  //   subscriptionDate:"subscriptionDate"  ,
   // }
   //
   // const columnsTable: Column<User>[] = [
@@ -63,26 +59,23 @@ export const MoreInformation = () => {
   //     title: 'User ID',
   //     dataIndex: 'id',
   //     key: 'userId-column',
-  //     render: (userId, { isBlocked }) => (
+  //     render: (userId) => (
   //       <div style={{ display: 'flex', gap: '12px', flexDirection: 'row' }}>
-  //         {isBlocked ?
-  //           <IconBlock />
-  //           : <div className={'w-6 h-6'}></div>}
   //         <span style={{ color: 'white' }}>{userId}</span>
   //       </div>
   //     ),
   //   },
   //   {
   //     title: (
-  //       <div className={s.sortHeader} onClick={() => toggleProfileSort()}>
+  //       <div>{/* className={s.sortHeader} onClick={() => toggleProfileSort()}*/}
   //         Profile link
-  //         <SortArrows active={sort === 'AZ' || sort === 'ZA'} direction={sort === 'AZ' ? 'ASC' : 'DESC'} />
+  //         {/*<SortArrows active={sort === 'AZ' || sort === 'ZA'} direction={sort === 'AZ' ? 'ASC' : 'DESC'} />*/}
   //       </div>
   //     ),
   //     dataIndex: 'profileLink',
   //     key: 'profileLink-column',
   //     render: (_, { firstName, lastName, profileLink }) => (
-  //       <a href={profileLink} target='_blank' rel='noopener noreferrer' className={s.link}>
+  //       <a href={profileLink} target='_blank' rel='noopener noreferrer' >{/*className={s.link}*/}
   //         {`${firstName} ${lastName}`}
   //       </a>
   //     ),
@@ -92,23 +85,24 @@ export const MoreInformation = () => {
   //     dataIndex: 'userName',
   //     key: 'userName-column',
   //     render: (_, { userName }) => <span style={{ color: 'white' }}> {userName}</span>,
-  //   },
+  //   },]
+  //
+
+
+
+
   //   {
   //     title: (
-  //       <div className={s.sortHeader} onClick={() => toggleDateSort()}>
+  //       <div> {/*className={s.sortHeader} onClick={() => toggleDateSort()}*/}
   //         Date added
-  //         <SortArrows active={sort === 'NEW' || sort === 'OLD'} direction={sort === 'NEW' ? 'DESC' : 'ASC'} />
+  //         {/*<SortArrows active={sort === 'NEW' || sort === 'OLD'} direction={sort === 'NEW' ? 'DESC' : 'ASC'} />*/}
   //       </div>
   //     ),
   //     dataIndex: 'createdAt',
   //     key: 'dateAdded-column',
   //     render: (date, user) => {
   //       const isOpen = openUserId === user.id
-  //       const formattedDate = new Date(date).toLocaleDateString('ru-RU', {
-  //         day: '2-digit',
-  //         month: '2-digit',
-  //         year: 'numeric',
-  //       })
+  //       const formattedDate = formattedDateDDMMYYYY(date)
   //
   //       return (
   //         <div
