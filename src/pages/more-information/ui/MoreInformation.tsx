@@ -3,6 +3,9 @@ import { Link, useLocation, useNavigate } from 'react-router'
 import { useState } from 'react'
 import { formattedDateDDMMYYYY } from '@/shared/utils/formattedDate.ts'
 import { ShowPayments } from '@/features/show-payments'
+import type { Column } from '@/widgets/table/TableRow.tsx'
+import type { User } from '@/pages/user-list'
+import { Table } from '@/widgets/table/Table.tsx'
 
 
 type TabsSettingsType={title:'Uploaded photos'|'Payments'|'Followers'|'Following'}
@@ -24,6 +27,7 @@ export const MoreInformation = () => {
   //     }
   //   }
   // })
+
   // const {data:photos}=useQuery( getPhotosFromPostsForAdminQuery,{variables:{
   //  input: {
   //    endCursorPostId: 'cursor',
@@ -47,108 +51,116 @@ export const MoreInformation = () => {
     { title: 'Followers' },
     { title: 'Following' }
   ]
-  // const rowTableFollow={
-  //   id:"followers.getUserFollowers.items[0]" ,
-  //   profileLink:"profileLink" ,
-  //   userName:"userName" ,
-  //   subscriptionDate:"subscriptionDate"  ,
-  // }
-  //
-  // const columnsTable: Column<User>[] = [
-  //   {
-  //     title: 'User ID',
-  //     dataIndex: 'id',
-  //     key: 'userId-column',
-  //     render: (userId) => (
-  //       <div style={{ display: 'flex', gap: '12px', flexDirection: 'row' }}>
-  //         <span style={{ color: 'white' }}>{userId}</span>
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     title: (
-  //       <div>{/* className={s.sortHeader} onClick={() => toggleProfileSort()}*/}
-  //         Profile link
-  //         {/*<SortArrows active={sort === 'AZ' || sort === 'ZA'} direction={sort === 'AZ' ? 'ASC' : 'DESC'} />*/}
-  //       </div>
-  //     ),
-  //     dataIndex: 'profileLink',
-  //     key: 'profileLink-column',
-  //     render: (_, { firstName, lastName, profileLink }) => (
-  //       <a href={profileLink} target='_blank' rel='noopener noreferrer' >{/*className={s.link}*/}
-  //         {`${firstName} ${lastName}`}
-  //       </a>
-  //     ),
-  //   },
-  //   {
-  //     title: 'Username',
-  //     dataIndex: 'userName',
-  //     key: 'userName-column',
-  //     render: (_, { userName }) => <span style={{ color: 'white' }}> {userName}</span>,
-  //   },]
-  //
+  // МОК ДАННЫЕ!!!
+  const xxx = [
+    { id: "5666666", userName: "Mickel", createdAt: new Date(), firstName: "Michael", lastName: "Johnson" },
+    { id: "fvdfdfdfv", userName: "ODODDO", createdAt: new Date(), firstName: "Oliver", lastName: "Davis" },
+    { id: "JFDSKLFKL", userName: "dddOOORRa", createdAt: new Date(), firstName: "Daniel", lastName: "Roberts" },
+    { id: "3e80ccc9-ab04-4a8d-b50d-c8686aec496f", userName: "John", createdAt: new Date(), firstName: "John", lastName: "Smith" },
+    { id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890", userName: "EmmaW", createdAt: new Date(), firstName: "Emma", lastName: "Wilson" },
+    { id: "b2c3d4e5-f6g7-8901-bcde-f23456789012", userName: "LiamBrown", createdAt: new Date(), firstName: "Liam", lastName: "Brown" },
+    { id: "c3d4e5f6-g7h8-9012-cdef-345678901234", userName: "SophiaT", createdAt: new Date(), firstName: "Sophia", lastName: "Taylor" },
+    { id: "d4e5f6g7-h8i9-0123-defg-456789012345", userName: "NoahMiller", createdAt: new Date(), firstName: "Noah", lastName: "Miller" },
+    { id: "e5f6g7h8-i9j0-1234-efgh-567890123456", userName: "OliviaDavis", createdAt: new Date(), firstName: "Olivia", lastName: "Davis" },
+    { id: "f6g7h8i9-j0k1-2345-fghi-678901234567", userName: "WilliamGarcia", createdAt: new Date(), firstName: "William", lastName: "Garcia" },
+    { id: "g7h8i9j0-k1l2-3456-ghij-789012345678", userName: "AvaRodriguez", createdAt: new Date(), firstName: "Ava", lastName: "Rodriguez" },
+    { id: "h8i9j0k1-l2m3-4567-hijk-890123456789", userName: "JamesMartinez", createdAt: new Date(), firstName: "James", lastName: "Martinez" },
+    { id: "i9j0k1l2-m3n4-5678-ijkl-901234567890", userName: "IsabellaHernandez", createdAt: new Date(), firstName: "Isabella", lastName: "Hernandez" },
+    { id: "j0k1l2m3-n4o5-6789-jklm-012345678901", userName: "BenjaminLopez", createdAt: new Date(), firstName: "Benjamin", lastName: "Lopez" },
+    { id: "k1l2m3n4-o5p6-7890-klmn-123456789012", userName: "MiaGonzalez", createdAt: new Date(), firstName: "Mia", lastName: "Gonzalez" },
+    { id: "l2m3n4o5-p6q7-8901-lmno-234567890123", userName: "LucasWilson", createdAt: new Date(), firstName: "Lucas", lastName: "Wilson" },
+    { id: "m3n4o5p6-q7r8-9012-mnop-345678901234", userName: "CharlotteAnderson", createdAt: new Date(), firstName: "Charlotte", lastName: "Anderson" },
+    { id: "n4o5p6q7-r8s9-0123-nopq-456789012345", userName: "HenryThomas", createdAt: new Date(), firstName: "Henry", lastName: "Thomas" },
+    { id: "o5p6q7r8-s9t0-1234-opqr-567890123456", userName: "AmeliaJackson", createdAt: new Date(), firstName: "Amelia", lastName: "Jackson" },
+    { id: "p6q7r8s9-t0u1-2345-pqrs-678901234567", userName: "AlexanderWhite", createdAt: new Date(), firstName: "Alexander", lastName: "White" }
+  ];
+  const yyy = [
+    { id: "sdfvsdvsd", userName: "John", createdAt: new Date(), firstName: "John", lastName: "Doe" },
+    { id: "qwerty1234", userName: "SarahM", createdAt: new Date(), firstName: "Sarah", lastName: "Moore" },
+    { id: "asdfgh5678", userName: "DavidK", createdAt: new Date(), firstName: "David", lastName: "King" },
+    { id: "zxcvbn9012", userName: "LisaP", createdAt: new Date(), firstName: "Lisa", lastName: "Parker" },
+    { id: "poiuyt3456", userName: "RobertL", createdAt: new Date(), firstName: "Robert", lastName: "Lee" },
+    { id: "lkjhgf7890", userName: "JenniferW", createdAt: new Date(), firstName: "Jennifer", lastName: "Wright" },
+    { id: "mnbvcx1234", userName: "ThomasH", createdAt: new Date(), firstName: "Thomas", lastName: "Harris" },
+    { id: "qazwsx5678", userName: "NancyC", createdAt: new Date(), firstName: "Nancy", lastName: "Clark" },
+    { id: "edcrfv9012", userName: "KevinS", createdAt: new Date(), firstName: "Kevin", lastName: "Scott" },
+    { id: "tgbyhn3456", userName: "PatriciaG", createdAt: new Date(), firstName: "Patricia", lastName: "Green" },
+    { id: "yhnujm7890", userName: "BrianA", createdAt: new Date(), firstName: "Brian", lastName: "Adams" },
+    { id: "ikmjun1234", userName: "LindaB", createdAt: new Date(), firstName: "Linda", lastName: "Baker" },
+    { id: "olpkiu5678", userName: "StevenN", createdAt: new Date(), firstName: "Steven", lastName: "Nelson" },
+    { id: "awszxc9012", userName: "BarbaraC", createdAt: new Date(), firstName: "Barbara", lastName: "Carter" },
+    { id: "qscwed3456", userName: "PaulM", createdAt: new Date(), firstName: "Paul", lastName: "Mitchell" },
+    { id: "rfvtgb7890", userName: "SusanP", createdAt: new Date(), firstName: "Susan", lastName: "Perez" },
+    { id: "yhnmki1234", userName: "MarkR", createdAt: new Date(), firstName: "Mark", lastName: "Roberts" },
+    { id: "ujmikn5678", userName: "KarenT", createdAt: new Date(), firstName: "Karen", lastName: "Turner" },
+    { id: "plokij9012", userName: "GeorgeP", createdAt: new Date(), firstName: "George", lastName: "Phillips" },
+    { id: "wsxqaz3456", userName: "DonnaC", createdAt: new Date(), firstName: "Donna", lastName: "Campbell" }
+  ];
+  const zzz=activeTab==="Followers"?xxx:yyy
 
 
+  // const dataTable=activeTab==="Followers"?followers?.getUserFollowers?.items:followings?.getUserFollowings?.items
+  const rowTableFollow: User[] = zzz?.map((follower) => ({
+    id: follower?.id ?? '——',
+    profileLink: `https://ulens.org/profile/${follower?.id ?? ''}`,
+    userName: follower?.userName ?? '——',
+    createdAt: follower?.createdAt ?? '——',
+    firstName:follower?.firstName ?? '——',
+    lastName:follower?.lastName ?? '——',
+  })) ?? []
 
+  const columnsTable: Column<User>[] = [
+    {
+      title: 'User ID',
+      dataIndex: 'id',
+      key: 'userId-column',
+      render: (userId) => (
+        <div style={{ display: 'flex', gap: '12px', flexDirection: 'row' }}>
+          <span style={{ color: 'white' }}>{userId}</span>
+        </div>
+      ),
+    },
+    {
+      title: (
+        <div>{/* className={s.sortHeader} onClick={() => toggleProfileSort()}*/}
+          Profile link
+          {/*<SortArrows active={sort === 'AZ' || sort === 'ZA'} direction={sort === 'AZ' ? 'ASC' : 'DESC'} />*/}
+        </div>
+      ),
+      dataIndex: 'profileLink',
+      key: 'profileLink-column',
+      render: (_, { firstName, lastName, profileLink }) => (
+        <a href={profileLink} target='_blank' rel='noopener noreferrer' className={"border-b-[1px]"}>{/*className={s.link}*/}
+          {`${firstName} ${lastName}`}
+        </a>
+      ),
+    },
+    {
+      title: 'Username',
+      dataIndex: 'userName',
+      key: 'userName-column',
+      render: (_, { userName }) => <span style={{ color: 'white' }}> {userName}</span>,
+    },
 
-  //   {
-  //     title: (
-  //       <div> {/*className={s.sortHeader} onClick={() => toggleDateSort()}*/}
-  //         Date added
-  //         {/*<SortArrows active={sort === 'NEW' || sort === 'OLD'} direction={sort === 'NEW' ? 'DESC' : 'ASC'} />*/}
-  //       </div>
-  //     ),
-  //     dataIndex: 'createdAt',
-  //     key: 'dateAdded-column',
-  //     render: (date, user) => {
-  //       const isOpen = openUserId === user.id
-  //       const formattedDate = formattedDateDDMMYYYY(date)
-  //
-  //       return (
-  //         <div
-  //           style={{
-  //             display: 'flex',
-  //             flexDirection: 'row',
-  //             justifyContent: 'space-between',
-  //             position: 'relative',
-  //           }}
-  //         >
-  //           <span style={{ color: 'white' }}>{formattedDate}</span>
-  //           <button onClick={() => setOpenUserId(isOpen ? null : user.id)}>
-  //             <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
-  //               <g clipPath='url(#clip0_45764_12530)'>
-  //                 <path
-  //                   d='M12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14Z'
-  //                   fill='white'
-  //                 />
-  //                 <path
-  //                   d='M19 14C20.1046 14 21 13.1046 21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 10.8954 17 12C17 13.1046 17.8954 14 19 14Z'
-  //                   fill='white'
-  //                 />
-  //                 <path
-  //                   d='M5 14C6.10457 14 7 13.1046 7 12C7 10.8954 6.10457 10 5 10C3.89543 10 3 10.8954 3 12C3 13.1046 3.89543 14 5 14Z'
-  //                   fill='white'
-  //                 />
-  //               </g>
-  //               <defs>
-  //                 <clipPath id='clip0_45764_12530'>
-  //                   <rect width='24' height='24' fill='white' />
-  //                 </clipPath>
-  //               </defs>
-  //             </svg>
-  //           </button>
-  //           {isOpen && (
-  //             <UserActionsMenu
-  //               user={user}
-  //               onClose={() => setOpenUserId(null)}
-  //               buttonBlockClickHandler={buttonBlockClickHandler}
-  //             />
-  //           )}
-  //         </div>
-  //       )
-  //     },
-  //   },
-  // ]
+    {
+      title: (
+        <div> {/*className={s.sortHeader} onClick={() => toggleDateSort()}*/}
+          Subscription Date
+          {/*<SortArrows active={sort === 'NEW' || sort === 'OLD'} direction={sort === 'NEW' ? 'DESC' : 'ASC'} />*/}
+        </div>
+      ),
+      dataIndex: 'createdAt',
+      key: 'dateAdded-column',
+      render: (date) => {
+        const formattedDate = formattedDateDDMMYYYY(date)
+        return (
+          <div>
+            <span style={{ color: 'white' }}>{formattedDate}</span>
+          </div>
+        )
+      },
+    },
+  ]
 
 
   return (
@@ -190,8 +202,8 @@ export const MoreInformation = () => {
                   <ShowPayments userId={user.id} />
                 </div>
               )}
-              {activeTab === 'Followers' && <div></div>}
-              {activeTab === 'Following' && <div></div>}
+              {activeTab === 'Followers' && <div><Table rows={rowTableFollow} columns={columnsTable}/></div>}
+              {activeTab === 'Following' && <div><Table rows={rowTableFollow} columns={columnsTable}/></div>}
             </div>
             {/*{activeTab!=="Uploaded photos"&&<Pagination elementCount={8} onPageChange={() => {}} />}*/}
           </div>

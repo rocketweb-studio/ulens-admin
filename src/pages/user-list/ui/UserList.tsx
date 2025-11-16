@@ -20,8 +20,8 @@ export type User = {
   userName: string
   firstName: string
   lastName: string
-  createdAt: string
-  isBlocked: boolean
+  createdAt: string|Date
+  isBlocked?: boolean
 }
 
 export const UserList = () => {
