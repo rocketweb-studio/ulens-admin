@@ -7,6 +7,8 @@ export const getPhotosFromPostsForAdminQuery = graphql(`
         hasNextPage
       }
       items {
+          id
+          userName
         images {
           medium {
             url
