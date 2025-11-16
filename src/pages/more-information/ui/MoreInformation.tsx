@@ -51,7 +51,7 @@ export const MoreInformation = () => {
     { title: 'Followers' },
     { title: 'Following' }
   ]
-  // МОК ДАННЫЕ!!!
+  // МОК ДАННЫЕ!!! для реальных данных в rowTableFollow вместо zzz подставить  dataTable
   const xxx = [
     { id: "5666666", userName: "Mickel", createdAt: new Date(), firstName: "Michael", lastName: "Johnson" },
     { id: "fvdfdfdfv", userName: "ODODDO", createdAt: new Date(), firstName: "Oliver", lastName: "Davis" },
