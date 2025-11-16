@@ -211,7 +211,7 @@ export const MoreInformation = () => {
                           src={`${import.meta.env.VITE_MEDIA_URL}${img.url}`}
                           alt={`${import.meta.env.VITE_MEDIA_URL}${img.url}`} /*{`Photo ${photoIndex + 1}`}*/
                           className="absolute inset-0 w-full h-full object-cover"
-                          // loading="lazy"
+                          loading="lazy"
                         />
                       </div>
                     ))
