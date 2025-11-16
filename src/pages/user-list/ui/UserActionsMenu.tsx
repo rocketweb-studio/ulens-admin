@@ -16,7 +16,7 @@ export const UserActionsMenu = ({ user, onClose, buttonBlockClickHandler }: Prop
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   const navigate = useNavigate()
   const bunUnBunHandler = () => {
-    buttonBlockClickHandler?.(user.id, user.isBlocked)
+    buttonBlockClickHandler?.(user.id, user.isBlocked??false)
   }
   const moreInfoHandler = (user: User) => {
     navigate(PATH.moreInfo, { state: { user } })
