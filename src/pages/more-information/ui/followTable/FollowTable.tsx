@@ -55,7 +55,7 @@ export const FollowTable = ({ activeTab,userId }:{activeTab:string,userId:string
       dataIndex: 'profileLink',
       key: 'profileLink-column',
       render: (_, { firstName, lastName, profileLink }) => (
-        <a href={profileLink} target='_blank' rel='noopener noreferrer' className={"border-b-[1px]"}>{/*className={s.link}*/}
+        <a href={profileLink} target='_blank' rel='noopener noreferrer'>{/*className={s.link}*/}
           {`${firstName} ${lastName}`}
         </a>
       ),
