@@ -1,21 +1,12 @@
-// import { useSearchParams } from 'react-router'
-// import type { ReactNode } from 'react'
+// import { Tabs } from '@rocketweb-studio/ulens-ui-kit'
+// import type { TabsType } from '@/pages/more-information'
 //
-// export const TabsParams = ({userId,activeTab,children}:{userId:string,activeTab:string,children:ReactNode}) => {
-//   const [searchParams, setSearchParams] = useSearchParams();
-//
-//   // Получить параметр
-//   const userId = searchParams.get('q');
-//   const activeTab = searchParams.get('page') || '1';
-//
-//   // Установить параметры
-//   const updateSearch = (newQuery) => {
-//     setSearchParams({ q: newQuery, page: '1' });
-//   };
+// export const TabsParams = ({activeTab}:{activeTab:string}) => {
+//   const tabsSettings: {title:TabsType}[] = [{ title: 'Uploaded photos' }, { title: 'Payments' }, { title: 'Followers' }, { title: 'Followings' }]
 //
 //   return (
-//     <div>
-//       {children}
+//     <div className={'mt-[30px] mb-[35px]'}>
+//       <Tabs tabsSettings={tabsSettings} activeTabTitle={activeTab} />
 //     </div>
 //   )
 // }

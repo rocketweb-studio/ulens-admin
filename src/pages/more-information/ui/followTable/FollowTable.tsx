@@ -5,12 +5,12 @@ import { Table } from '@/shared/ui/table/Table.tsx'
 import { useQuery } from '@apollo/client/react'
 import { getUserFollowersQuery, getUserFollowingsQuery } from '@/shared/graphql/queries'
 
-export const FollowTable = ({ activeTab }:{activeTab:string}) => {
+export const FollowTable = ({ activeTab,userId }:{activeTab:string,userId:string}) => {
   const {data:followings}=useQuery( getUserFollowingsQuery,{
     variables:{input:{
         pageNumber: 1,
         pageSize: 10,
-        userId: ""
+        userId: userId
       }
     }
   })
@@ -18,7 +18,7 @@ export const FollowTable = ({ activeTab }:{activeTab:string}) => {
     variables:{input:{
         pageNumber: 1,
         pageSize: 10,
-        userId: ""
+        userId: userId
       }
     }
   })

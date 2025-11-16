@@ -6,19 +6,30 @@ import { FollowTable } from '@/pages/more-information/ui/followTable/FollowTable
 import { PhotosAsUser } from '@/pages/more-information/ui/photosAsUser/PhotosAsUser.tsx'
 import { DataUser } from '@/pages/more-information/ui/dataUser/DataUser.tsx'
 
-export type Tabs='Uploaded photos'|'Payments'|'Followers'|'Followings'
+export type TabsType='Uploaded photos'|'Payments'|'Followers'|'Followings'
+const tabsSettings: {
+  title: TabsType }[] = [
+  { title: 'Uploaded photos' },
+  { title: 'Payments' },
+  { title: 'Followers' },
+  { title: 'Followings' }
+]
 
 export const MoreInformation = () => {
-  const [activeTab, setActiveTab] = useState<string>('Uploaded photos')
    const navigate = useNavigate()
    const location = useLocation()
    const { user } = location.state || null
-  const tabsSettings: {title:Tabs}[] = [
-    { title: 'Uploaded photos' },
-    { title: 'Payments' },
-    { title: 'Followers' },
-    { title: 'Followings' }
-  ]
+   const [activeTab, setActiveTab] = useState<string>('Uploaded photos')
+   // const [searchParams, setSearchParams] = useSearchParams();
+  const updateSearch = (id:string,tab:string) => {
+    // setSearchParams({ id, tab });
+    console.log(id,tab)
+    setActiveTab(tab)
+  };
+  //  const id = searchParams.get("id");
+  //  const tab = searchParams.get("tab")
+
+
 
   return (
     <>
@@ -34,13 +45,14 @@ export const MoreInformation = () => {
         {user ? <div>
            <DataUser user={user} />
             <div>
-              <div className={'mt-[30px] mb-[35px]'}>
-                <Tabs tabsSettings={tabsSettings} openActiveTab={setActiveTab} />
+              {/*<TabsParams activeTab={activeTab} setActiveTab={setActiveTab}/>*/}
+              < div className = { 'mt-[30px] mb-[35px]' } >
+                <Tabs tabsSettings = { tabsSettings } activeTab={activeTab} setActiveTab={(title)=>updateSearch(user.id, title)} />
               </div>
               {activeTab === 'Uploaded photos' && <PhotosAsUser userId={user.id} userName={user.userName}/>}
               {activeTab === 'Payments' && <div><ShowPayments userId={user.id} /></div>}
-              {activeTab==="Followings"&&<FollowTable activeTab={activeTab} />}
-              {activeTab==="Followers"&&<FollowTable activeTab={activeTab} />}
+              {activeTab==="Followings"&&<FollowTable activeTab={activeTab} userId={user.id} />}
+              {activeTab==="Followers"&&<FollowTable activeTab={activeTab} userId={user.id} />}
             </div>
             {/*{activeTab!=="Uploaded photos"&&<Pagination elementCount={8} onPageChange={() => {}} />}*/}
           </div>
