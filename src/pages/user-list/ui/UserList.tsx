@@ -48,7 +48,7 @@ export const UserList = () => {
   const sortQuery = mapSortToQuery(sort)
   const [page, setPage] = useState<number>(1)
 const [pageSize, setPageSize] = useState<number>(8)
-  const { data, error } = useQuery(getUsersList, {
+  const { data, error,loading } = useQuery(getUsersList, {
     variables: {
       input: {
         pageNumber: page,
@@ -168,9 +168,9 @@ const  paginationHandler = (p:number)=>{
     },
   ]
 
-  // if (loading && !data) {
-  //   return <div>Загрузка...</div>
-  // }
+  if (loading && !data) {
+    return <div>Загрузка...</div>
+  }
 
   if (error) {
     return <div style={{ color: 'red' }}>Ошибка: {error.message}</div>

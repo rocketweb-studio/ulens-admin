@@ -23,7 +23,6 @@ export const PhotosAsUser = ({userId,userName}:{userId:string|null,userName:stri
               src={`${import.meta.env.VITE_MEDIA_URL}${img.url}`}
               alt={`Photo ${index}`}
               className="absolute inset-0 w-full h-full object-cover"
-              loading="lazy"
             />
           </div>}))
         })}
