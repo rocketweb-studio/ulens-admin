@@ -92,10 +92,11 @@ export const FollowTable = ({ activeTab,userId }:{activeTab:string,userId:string
     },
   ]
 
-  return  (<div>
+  return  dataTable?.length ?
+    <div>
     <Table rows={rowTableFollow} columns={columnsTable} />
-    <Pagination pageSize={pageSize} onPageSizeChange={setPageSize} currentPage={page}  elementCount={dataTable?.length??110} onPageChange={(e)=>setPage(e.page)} />
-
-  </div>)
+    <Pagination pageSize={pageSize} onPageSizeChange={setPageSize} currentPage={page}  elementCount={dataTable?.length||0} onPageChange={(e)=>setPage(e.page)} />
+  </div>
+    :<div className={'flex justify-center'}>Subscriptions not found</div>
       }
 
