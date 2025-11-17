@@ -4,24 +4,29 @@ import { formattedDateDDMMYYYY } from '@/shared/utils/formattedDate.ts'
 import { Table } from '@/shared/ui/table/Table.tsx'
 import { useQuery } from '@apollo/client/react'
 import { getUserFollowersQuery, getUserFollowingsQuery } from '@/shared/graphql/queries'
+import { Pagination } from '@rocketweb-studio/ulens-ui-kit'
+import { useState } from 'react'
 
 export const FollowTable = ({ activeTab,userId }:{activeTab:string,userId:string}) => {
+  const [pageSize,setPageSize]=useState(8)
+  const [page,setPage]=useState(1)
   const {data:followings}=useQuery( getUserFollowingsQuery,{
     variables:{input:{
-        pageNumber: 1,
-        pageSize: 10,
+        pageNumber: page,
+        pageSize: pageSize,
         userId: userId
       }
     }
   })
   const {data:followers}=useQuery(getUserFollowersQuery,{
     variables:{input:{
-        pageNumber: 1,
-        pageSize: 10,
+        pageNumber: page,
+        pageSize: pageSize,
         userId: userId
       }
     }
   })
+
   const dataTable=activeTab==="Followers"?followers?.getUserFollowers?.items:followings?.getUserFollowings?.items
 
 
@@ -87,6 +92,10 @@ export const FollowTable = ({ activeTab,userId }:{activeTab:string,userId:string
     },
   ]
 
-  return  (<div><Table rows={rowTableFollow} columns={columnsTable} /></div>)
+  return  (<div>
+    <Table rows={rowTableFollow} columns={columnsTable} />
+    <Pagination pageSize={pageSize} onPageSizeChange={setPageSize} currentPage={page}  elementCount={dataTable?.length??110} onPageChange={(e)=>setPage(e.page)} />
+
+  </div>)
       }
 
