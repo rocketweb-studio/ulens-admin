@@ -56,7 +56,7 @@ export const MoreInformation = () => {
             </div>
             {/*{activeTab!=="Uploaded photos"&&<Pagination elementCount={8} onPageChange={() => {}} />}*/}
           </div>
-          : <div className={'text-4xl'}>The user was not found</div>}
+          : <div className={'text-4xl text-white'}>The user was not found</div>}
       </div>
     </>
   )
