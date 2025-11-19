@@ -24,7 +24,6 @@ const paymentColumns: Column<Payment>[] = [
     key: 'fullName',
     title: 'Full Name',
     width: '200px',
-    sortable: true,
     render: (value: string) => (
       <div className={'flex gap-x-3 items-center'}>
         <div className={'shrink-0'}>
@@ -38,34 +37,29 @@ const paymentColumns: Column<Payment>[] = [
     key: 'userName',
     title: 'User Name',
     width: '200px',
-    sortable: true,
     render: (value) => <span>{value}</span>,
   },
   {
     key: 'dateAdded',
     title: 'Date added',
     width: '120px',
-    sortable: true,
     render: (value: string) => formattedDateDDMMYYYY(value),
   },
   {
     key: 'amount',
     title: 'Amount, $',
     width: '100px',
-    sortable: true,
     render: (value: number) => `$${value}`,
   },
   {
     key: 'subscription',
     title: 'Subscription',
     width: '100px',
-    sortable: true,
   },
   {
     key: 'paymentMethod',
     title: 'Payment Method',
     width: '120px',
-    sortable: true,
     render: (value: 'Stripe' | 'PayPal') => <span>{value}</span>,
   },
 ]
