@@ -21,7 +21,7 @@ export const router = createBrowserRouter([
           { path: PATH.statistics, Component: Statistics },
           { path: PATH.paymentsList, Component: PaymentsList },
           { path: PATH.postsList, Component: PostsList },
-          {path: PATH.moreInfo, Component: MoreInformation},
+          { path: PATH.moreInfo, Component: MoreInformation },
 
         ],
       },
