@@ -28,6 +28,7 @@ export const UserList = () => {
   const [sort, setSort] = useState<SortValue>('NEW')
   const [openUserId, setOpenUserId] = useState<string | null>(null)
   const { isOpen: isBanModalOpen, closeModal: closeBanModal, openModal: openBanModal } = useModal()
+  const [currentUserName, setCurrentUserName] = useState<string>('')
   const [currentUserId, setCurrentUserId] = useState<string>('')
   const [currentUserBlockStatus, setCurrentUserBlockStatus] = useState<boolean>(false)
 
@@ -39,7 +40,8 @@ export const UserList = () => {
     setSort((prev) => (prev === 'AZ' ? 'ZA' : 'AZ'))
   }
 
-  const buttonBlockClickHandler = (id: string, blockedStatus: boolean) => {
+  const buttonBlockClickHandler = (id: string, userName: string, blockedStatus: boolean) => {
+    setCurrentUserName(userName)
     setCurrentUserId(id)
     setCurrentUserBlockStatus(blockedStatus)
     openBanModal()
@@ -191,6 +193,7 @@ const  paginationHandler = (p:number)=>{
         onClose={closeBanModal}
         userId={currentUserId}
         isBlocked={currentUserBlockStatus}
+        userName={currentUserName}
       />
     </div>
   )

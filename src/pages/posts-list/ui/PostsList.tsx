@@ -17,6 +17,7 @@ export const PostsList = () => {
   const [hasNextPage, setHasNextPage] = useState<boolean>(true)
   const { isOpen: isBanModalOpen, closeModal: closeBanModal, openModal: openBanModal } = useModal()
   const [currentUserId, setCurrentUserId] = useState<string>('')
+  const [currentUserName, setCurrentUserName] = useState<string>('')
   const [currentUserBlockStatus, setCurrentUserBlockStatus] = useState<boolean>(false)
 
   const { data, loading, fetchMore } = useQuery(getAllPostsForAdminQuery, {
@@ -24,7 +25,8 @@ export const PostsList = () => {
   })
   const { data: dataSubs } = useSubscription(getPostsSubscription)
 
-  const buttonBlockClickHandler = (id: string, blockedStatus: boolean) => {
+  const buttonBlockClickHandler = (id: string, userName: string, blockedStatus: boolean) => {
+    setCurrentUserName(userName)
     setCurrentUserId(id)
     setCurrentUserBlockStatus(blockedStatus)
     openBanModal()
@@ -119,6 +121,7 @@ export const PostsList = () => {
         onClose={closeBanModal}
         userId={currentUserId}
         isBlocked={currentUserBlockStatus}
+        userName={currentUserName}
       />
     </section>
   )
