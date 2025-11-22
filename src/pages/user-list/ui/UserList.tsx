@@ -47,8 +47,9 @@ export const UserList = () => {
 
   const sortQuery = mapSortToQuery(sort)
   const [page, setPage] = useState<number>(1)
-const [pageSize, setPageSize] = useState<number>(8)
-  const { data, error,loading } = useQuery(getUsersList, {
+  const [pageSize, setPageSize] = useState<number>(8)
+
+  const { data,} = useQuery(getUsersList, {
     variables: {
       input: {
         pageNumber: page,
@@ -59,9 +60,11 @@ const [pageSize, setPageSize] = useState<number>(8)
         sortDirection: sortQuery.sortDirection,
       },
     },
+    fetchPolicy: 'cache-and-network',
   })
-const  paginationHandler = (p:number)=>{
-    setPage(p)
+const paginationHandler = (page:number,pageSize:number)=>{
+    setPage(page)
+    setPageSize(pageSize)
 }
   const rowsTableUsers: User[] =
     data?.getUsers.items.map((user) => ({
@@ -168,13 +171,13 @@ const  paginationHandler = (p:number)=>{
     },
   ]
 
-  if (loading && !data) {
-    return <div>Загрузка...</div>
-  }
-
-  if (error) {
-    return <div style={{ color: 'red' }}>Ошибка: {error.message}</div>
-  }
+  // if (loading && !data) {
+  //   return <div>Загрузка...</div>
+  // }
+  //
+  // if (error) {
+  //   return <div style={{ color: 'red' }}>Ошибка: {error.message}</div>
+  // }
 
   return (
     <div>
@@ -185,7 +188,7 @@ const  paginationHandler = (p:number)=>{
         </div>
       </div>
       <Table<User> rows={rowsTableUsers} columns={columnsTable} />
-      <Pagination pageSize={pageSize} onPageSizeChange={setPageSize}  elementCount={data?.getUsers.totalCount||0} onPageChange={(e)=>paginationHandler(e.page)} />
+      <Pagination pageSize={pageSize} currentPage={page} onPageSizeChange={setPageSize}  elementCount={data?.getUsers.totalCount||0} onPageChange={({page,pageSize})=>paginationHandler(page,pageSize)} />
       <UserBan
         isOpen={isBanModalOpen}
         onClose={closeBanModal}
