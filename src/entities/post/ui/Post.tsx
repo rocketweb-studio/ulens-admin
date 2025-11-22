@@ -13,7 +13,7 @@ export type PostData = Pick<PostModel, 'id' | 'createdAt' | 'description' | 'ava
 
 type Props = {
   postItem: PostData
-  onUserAction?: (id: string, blockedStatus: boolean) => void
+  onUserAction?: (id: string, userName: string, blockedStatus: boolean) => void
 }
 
 export const Post = ({ postItem, onUserAction }: Props) => {
@@ -39,7 +39,7 @@ export const Post = ({ postItem, onUserAction }: Props) => {
         </div>
         <Button
           variant={'text-white'}
-          onClick={() => onUserAction?.(postItem.ownerId, postItem.isOwnerBlocked || false)}
+          onClick={() => onUserAction?.(postItem.ownerId, postItem.userName, postItem.isOwnerBlocked || false)}
         >
           {!postItem.isOwnerBlocked ?
             <IconBlock />

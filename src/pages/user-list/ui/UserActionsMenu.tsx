@@ -9,14 +9,14 @@ import { PATH } from '@/shared'
 type Props = {
   user: User
   onClose: () => void
-  buttonBlockClickHandler?: (id: string, blockedStatus: boolean) => void
+  buttonBlockClickHandler?: (id: string, userName: string, blockedStatus: boolean) => void
 }
 
 export const UserActionsMenu = ({ user, onClose, buttonBlockClickHandler }: Props) => {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   const navigate = useNavigate()
-  const bunUnBunHandler = () => {
-    buttonBlockClickHandler?.(user.id, user.isBlocked??false)
+  const banUnBanHandler = () => {
+    buttonBlockClickHandler?.(user.id, user.userName, user.isBlocked??false)
   }
   const moreInfoHandler = (user: User) => {
     navigate(PATH.moreInfo, { state: { user } })
@@ -61,7 +61,7 @@ export const UserActionsMenu = ({ user, onClose, buttonBlockClickHandler }: Prop
           </svg>
           <span>Delete User</span>
         </li>
-        <li className={s.dropDownBtn} onClick={bunUnBunHandler}>
+        <li className={s.dropDownBtn} onClick={banUnBanHandler}>
           {user.isBlocked ?
             <span className={'flex gap-3'}>
               <IconUnblock />
