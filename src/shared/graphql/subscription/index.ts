@@ -1,0 +1,1 @@
+export { getPostsSubscription } from './getPostsSubscription.ts'
