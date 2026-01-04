@@ -6,8 +6,12 @@ export const DataUser = ({user}:{ user: User }) => {
   return (
     <div>
       <div className={'flex gap-[24px] mt-[24px]'}>
-        <img src={'user.avatar'} alt={'avatar'}
-             className={`rounded-full overflow-hidden w-[60px] h-[60px] bg-[#4c8dff] object-cover object-center`} />
+        {/*<img src={'user.avatar'} alt={'avatar'} role="presentation"*/}
+        {/*     className={`rounded-full overflow-hidden w-[60px] h-[60px] bg-[#4c8dff] object-cover object-center `} />*/}
+        <div
+          className="rounded-full w-[60px] h-[60px] bg-[#4c8dff] bg-cover bg-center"
+          style={{ backgroundImage: user ? `url(${user})` : 'none' }} //user.avatar а не user
+        />
         <div className={'flex flex-col  justify-evenly'}>
           <span className={'font-bold text-[20px]'}>{user.firstName} {user.lastName}</span>
           <Link to={user.profileLink}><span
