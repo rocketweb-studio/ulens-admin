@@ -153,7 +153,7 @@ export const PhotosAsUser = ({ userId, userName }: { userId: string | null, user
       </div>
 
       {totalImages === 0 ? (
-        <div className="text-center py-12 bg-gray-50 rounded-lg">
+        <div className="text-center py-12 rounded-lg">
           <p className="text-gray-500">No images found for this user</p>
         </div>
       ) : (
